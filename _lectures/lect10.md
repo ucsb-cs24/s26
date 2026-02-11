@@ -5,6 +5,8 @@ desc: "Binary Heaps and Priority Queues"
 ready: true
 pre-reading: "Savitch: 11.1 - 11.2"
 pdfurl: /lectures/CS24_BinaryHeap.pdf
+annotatedready: true
+annotatedpdfurl: /lectures/CS24_BinaryHeap_ann.pdf
 handouturl: https://bit.ly/CS24-binaryheap
 ---
 
