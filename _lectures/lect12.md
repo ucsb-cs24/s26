@@ -1,23 +1,17 @@
 ---
 num: "lect12"
 sequence: 12
-desc: "Graph representation with applications to Neural Networks (QUIZ 3)"
-ready: false
-pre-reading: "Savitch: 15.1 - 15.2"
-pdfurl: /lectures/CS24_Graph_Representation.pdf
+desc: "Priority Queue and Hashtable Practice (QUIZ 3)"
+ready: true
+pre-reading: ""
+pdfurl: /lectures/CS24_PQ_HT_Practice.pdf
 ---
 
 # Code from lecture
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
 
-Watch the first 5 minutes of this intro video to Neural Networks: <https://youtu.be/aircAruvnKk?feature=shared>
+
 
 # Topics
-* Graph: terminology and application to modeling neural networks
-* Representation: adjacency list 
-* Connections to implementing a neural network (topic for pa03)
-* Visualizing how a neural net is stored in memory and supporting data structures
-* Designing the Graph class to allow building the graph iteratively by calling functions to add nodes and edges.
-* PA03 starter code for in class activity: <https://github.com/ucsb-cs24-s25/STARTER-pa03>
-
+* We will revisit the web-traffic analysis problem and explore different approaches involving PQ and hashtable
 

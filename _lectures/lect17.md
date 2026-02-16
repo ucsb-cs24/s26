@@ -1,7 +1,7 @@
 ---
 num: "lect17"
 sequence: 17
-desc: "Priority Queue Review + Complexity Analysis of BFS and DFS"
+desc: "Final Review"
 ready: false
 pre-reading: ""
 pdfurl: /lectures/CS24_PQ_GraphSearchComplexity.pdf
@@ -13,4 +13,4 @@ pdfurl: /lectures/CS24_PQ_GraphSearchComplexity.pdf
 
 
 ## Topics
-* We'll nail down heapify and heapsort algorithms from last class by coding them
+

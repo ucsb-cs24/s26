@@ -1,9 +1,9 @@
 ---
 num: "lect14"
 sequence: 14
-desc: "Graph Algorithms and Applications (Quiz 4)"
+desc: "Graph search: Breadth first traversal (Quiz 4)"
 ready: false
-pre-reading: "Savitch: 15.3 - 15.4"
+pre-reading: "Savitch: 15.3"
 pdfurl: /lectures/CS24_PQ_GraphSearchComplexity.pdf
 ---
 
