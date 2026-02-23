@@ -1,6 +1,6 @@
 ---
 num: pa03-tutorial
-ready: false
+ready: true
 desc: "A Gentle Introduction to Graphs and Neural Networks"
 ---
 
@@ -18,6 +18,10 @@ We can understand this better by seeing which limitations the binary tree puts o
 - Every node has at most two outgoing connections, collectively called "children"
 - Every node, except the root, has exactly one incoming connection, called the "parent"
 - A node may never have an outgoing connection to an ancestor or cousin.
+
+###### Neural Networks: Required videos to watch
+- 3Blue1Brown - <https://youtu.be/aircAruvnKk?si=KZt2AsbD7URc58-L>
+
 
 ###### The power of a Graph
 Now, let's go back to talking about the generic graph structure. 
@@ -97,6 +101,8 @@ In general, for any ```delta``` $d$, $d$ is in the form $f_1f_2$, where $f_1$ is
 Here is a nifty little gif that depicts these processes. You can see how the input flows through the graph, and how the nodes are activated, as well as how the error gets propagated backward. 
 ![Prediction and Backprop](assets/backprop.gif)
 
+Watch this video to get a conceptual understanding of gradient descent and back propagation: <https://youtu.be/IHZwWFHWa-w?si=hTqO5Co0hPeEt5VA>
+
 ### External Resources
 
 ###### BFS and DFS
@@ -107,11 +113,6 @@ Here is a nifty little gif that depicts these processes. You can see how the inp
 You are not required to understand the math behind gradient descent, but if you are interested, this is a great resource:
 - StatQuest - Gradient Descent: <https://www.youtube.com/watch?v=sDv4f4s2SB8>
 
-###### Neural Networks: Required videos to watch
-Here are some great resources to help you out. I would say that statquest has great videos to understand the implementation of neural network structures, whereas 3blue1brown is more conceptual based:
-- StatQuest - Neural Network Basics (great for understanding the prediction algorithm): <https://youtu.be/CqOfi41LfDw?si=8waS2U01uMWcpH2i>
-- StatQuest - Back Propagation (great for understanding the contribute algorithm): <https://youtu.be/IN2XmBhILt4?si=bnDft-3T4DQ2iO9X>
-- 3Blue1Brown - <https://youtu.be/aircAruvnKk?si=KZt2AsbD7URc58-L>
 
 
 

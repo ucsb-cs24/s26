@@ -2,9 +2,10 @@
 num: "lect13"
 sequence: 13
 desc: "Graph representation with applications to Neural Networks"
-ready: false
+ready: true
 pre-reading: "Savitch: 15.1 - 15.2"
 pdfurl: /lectures/CS24_Graph_Representation.pdf
+handouturl: https://bit.ly/NeuralNets-GraphRepresentation
 ---
 
 # Code from lecture
@@ -18,6 +19,6 @@ Watch the first 5 minutes of this intro video to Neural Networks: <https://youtu
 * Connections to implementing a neural network (topic for pa03)
 * Visualizing how a neural net is stored in memory and supporting data structures
 * Designing the Graph class to allow building the graph iteratively by calling functions to add nodes and edges.
-* PA03 starter code for in class activity: <https://github.com/ucsb-cs24-s25/STARTER-pa03>
+
 
 
