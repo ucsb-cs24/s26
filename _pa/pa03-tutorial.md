@@ -20,7 +20,8 @@ We can understand this better by seeing which limitations the binary tree puts o
 - A node may never have an outgoing connection to an ancestor or cousin.
 
 ###### Neural Networks: Required videos to watch
-- 3Blue1Brown - <https://youtu.be/aircAruvnKk?si=KZt2AsbD7URc58-L>
+- 3Blue1Brown - But what is a neural network? (Video 1): <https://youtu.be/aircAruvnKk?si=KZt2AsbD7URc58-L>
+- 3Blue1Brown - Gradient descent, how neural networks learn (Video 2): <https://youtu.be/IHZwWFHWa-w?si=_e4wkFW624ari842>
 
 
 ###### The power of a Graph
@@ -44,7 +45,7 @@ With this problem in mind, we can think of a way to interpret a graph structure 
 
 Just as we did before with the Binary Tree structure, let's outline the specific limitations (and indeed, upgrades) the neural network puts on its underlying graph structure (skip if you already read this in the original writeup):
 
-- The Neural Network consists of "layers" which collectively partition the graph's nodes. Every node is apart of a layer, and layers may not share the same node.
+- The Neural Network consists of "layers" which collectively partition the graph's nodes. Every node is a part of a layer, and layers may not share the same node.
 - There is at least one input layer and one output layer. Every other layer is a "hidden" layer.
 - The layers are ordered such that the input layer is first, and the output layer is last, each hidden layer specifically has a predecessor layer and a successor layer. 
 - Every node in one layer has an outgoing connection to every node in the successor layer. A node may never have an outgoing connection to a layer that is not in the successor layer. 
@@ -74,7 +75,7 @@ $$h_1 = ReLU(x_1w_1 + x_2w_4 + b_1)$$
 Using these steps, we can compute the value for every other node, including the output node, which will be our prediction. 
 - $h_2 = ReLU(x_1w_2 + x_2w_5 + b_2)$
 - $h_3 = ReLU(x_1w_3 + x_2w_6 + b_3)$
-- $y_1 = sigmoid(v_3w_7 + v_4w_8 + v_5w_9 + b_4)$
+- $y_1 = sigmoid(h_1w_7 + h_2w_8 + h_3w_9 + b_4)$
 
 The important thing to realize is that these weights and biases are what control the prediction.
 
@@ -85,7 +86,7 @@ So, neural networks employ a combination of two concepts:
 - Gradient Descent
 - Back Propagation
 
-When a neural network makes a prediction, there is a sense of "how bad" of a prediction it was. This measure of quality can be found with a "Loss" function. In otherwords, the Loss function gives the neural network penalties and therefore incentive to improve. 
+When a neural network makes a prediction, there is a sense of "how bad" of a prediction it was. This measure of quality can be found with a "Loss" function. In other words, the Loss function gives the neural network penalties and therefore incentive to improve. 
 
 ###### Gradient Descent
 Once the Loss function outputs a penalty, gradient descent tells us how to update every single weight and bias in order to make a better prediction. Note that it gives us updates to these weights and biases to make a **better** prediction, not the **best** prediction. Because of this, we usually make multiple training passes to keep getting a *better* set of weights and biases until we reach some accuracy threshold on a test dataset (unseen data). To be specific, think of it as a black box that calculates a ```delta``` term for each weight and bias, where ```delta``` is the amount to be subtracted from the original weight or bias value. 
@@ -94,7 +95,6 @@ Once the Loss function outputs a penalty, gradient descent tells us how to updat
 When gradient descent calculates the change in a particular weight or bias, this change depends on changes made to nodes that come later in the neural network. 
 
 The "error", in other words, gets propagated back through the neural network.
-In general, for any ```delta``` $d$, $d$ is in the form $f_1f_2$, where $f_1$ is a factor in the ```delta``` for weights and biases in the previous layer. 
 
 
 
