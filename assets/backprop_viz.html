@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backpropagation: Step-by-Step — CS24 PA03</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #dee2e6;
+    --text: #212529;
+    --text-muted: #6c757d;
+    --header-bg: #1a1d23;
+    --header-text: #f1f3f5;
+    --accent: #1971c2;
+    --accent-light: #e7f5ff;
+    --success: #2f9e44;
+    --success-light: #ebfbee;
+    --warning: #f59f00;
+    --warning-light: #fff9db;
+    --shadow: 0 2px 8px rgba(0,0,0,0.10);
+    --radius: 10px;
+    --mono: 'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* ── Header ── */
+  #header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 14px 28px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 3px solid var(--accent);
+  }
+  #header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  #header .subtitle {
+    font-size: 0.82rem;
+    color: #adb5bd;
+    font-family: var(--mono);
+  }
+
+  /* ── Main layout ── */
+  #app {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 60px);
+    min-width: 900px;
+  }
+
+  /* ── Left panel: SVG ── */
+  #svg-panel {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px 24px 24px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+  }
+  #svg-panel .panel-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    align-self: flex-start;
+  }
+  #network-svg {
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    display: block;
+  }
+
+  /* ── Right panel ── */
+  #info-panel {
+    width: 380px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    padding: 20px 20px 16px 20px;
+    overflow-y: auto;
+    gap: 14px;
+  }
+
+  /* ── Step header ── */
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .step-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-family: var(--mono);
+  }
+  .step-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  /* ── Description ── */
+  .description {
+    font-size: 0.88rem;
+    color: #343a40;
+    line-height: 1.6;
+  }
+
+  /* ── Info sections ── */
+  .info-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .info-section-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-muted);
+    padding: 8px 12px 6px;
+    border-bottom: 1px solid var(--border);
+    background: #f8f9fa;
+  }
+  .info-section-body {
+    padding: 10px 12px;
+  }
+
+  /* ── Current function ── */
+  .current-fn {
+    font-family: var(--mono);
+    font-size: 0.83rem;
+    color: var(--accent);
+    font-weight: 600;
+    word-break: break-all;
+  }
+  .current-fn.empty {
+    color: var(--text-muted);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ── Call stack ── */
+  .call-stack {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .call-stack li {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #f1f3f5;
+    border-left: 3px solid #ced4da;
+    color: #495057;
+    line-height: 1.35;
+    word-break: break-all;
+  }
+  .call-stack li.top {
+    background: var(--accent-light);
+    border-left-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .call-stack-empty {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 2px 0;
+  }
+
+  /* ── Contributions map ── */
+  .contrib-map {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .contrib-entry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: var(--success-light);
+    border-left: 3px solid var(--success);
+    color: #1c5e2d;
+    word-break: break-all;
+  }
+  .contrib-entry.highlighted {
+    background: #fff3bf;
+    border-left-color: var(--warning);
+    color: #7d5a00;
+    font-weight: 700;
+  }
+  .contrib-key {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .contrib-arrow {
+    color: #adb5bd;
+    font-size: 0.9em;
+  }
+  .contrib-map-empty {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 2px 0;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    border-radius: 7px;
+    padding: 10px 13px;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    border-left: 4px solid;
+    white-space: pre-wrap;
+  }
+  .callout.info    { background: var(--accent-light);  border-color: var(--accent);  color: #1a4a80; }
+  .callout.success { background: var(--success-light); border-color: var(--success); color: #1c5e2d; }
+  .callout.warning { background: var(--warning-light); border-color: var(--warning); color: #7d5a00; }
+
+  /* ── Navigation ── */
+  #nav-bar {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 6px;
+  }
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s, opacity 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn:active { transform: scale(0.97); }
+  #btn-prev {
+    background: #e9ecef;
+    color: #495057;
+  }
+  #btn-prev:hover:not(:disabled) { background: #dee2e6; }
+  #btn-next {
+    background: var(--accent);
+    color: #fff;
+  }
+  #btn-next:hover:not(:disabled) { background: #1864ab; }
+  .nav-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+
+  .step-counter {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .step-progress {
+    height: 4px;
+    border-radius: 2px;
+    background: #dee2e6;
+    overflow: hidden;
+  }
+  .step-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .kbd-hint {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #adb5bd;
+  }
+  kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    background: #f8f9fa;
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    color: #495057;
+  }
+
+  /* ── SVG transitions ── */
+  .node-circle {
+    transition: fill 0.35s ease, stroke 0.35s ease, stroke-width 0.25s ease;
+  }
+  .edge-line {
+    transition: stroke 0.35s ease, stroke-width 0.25s ease;
+  }
+  .edge-arrow {
+    transition: fill 0.35s ease;
+  }
+</style>
+</head>
+<body>
+
+<header id="header" role="banner">
+  <h1>Backpropagation: Step-by-Step</h1>
+  <span class="subtitle">CS24 PA03 — contribute() walkthrough</span>
+</header>
+
+<div id="app" role="main">
+
+  <!-- Left: SVG Panel -->
+  <section id="svg-panel" aria-label="Neural network diagram">
+    <div class="panel-title">Network Diagram</div>
+    <svg id="network-svg" viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg"
+         role="img" aria-label="2-1-1 neural network with nodes 1, 2, 3, and 4">
+      <defs>
+        <!-- Arrowhead: gray (normal) -->
+        <marker id="arrow-gray" markerWidth="10" markerHeight="7"
+                refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#adb5bd" class="edge-arrow" id="arr-gray-poly"/>
+        </marker>
+        <!-- Arrowhead: blue (active) -->
+        <marker id="arrow-blue" markerWidth="10" markerHeight="7"
+                refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#1971c2"/>
+        </marker>
+        <!-- Arrowhead: green (done) -->
+        <marker id="arrow-green" markerWidth="10" markerHeight="7"
+                refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#2f9e44"/>
+        </marker>
+      </defs>
+
+      <!-- Layer labels -->
+      <text x="120" y="80" text-anchor="middle" font-size="12" fill="#868e96"
+            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-weight="600" letter-spacing="0.04em">Input Layer</text>
+      <text x="380" y="80" text-anchor="middle" font-size="12" fill="#868e96"
+            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-weight="600" letter-spacing="0.04em">Hidden Layer</text>
+      <text x="600" y="80" text-anchor="middle" font-size="12" fill="#868e96"
+            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-weight="600" letter-spacing="0.04em">Output Layer</text>
+
+      <!-- Edges: 1→3, 2→3, 3→4 -->
+      <!-- Edge 1→3 -->
+      <line id="edge-1-3"
+            x1="157" y1="175" x2="337" y2="237"
+            stroke="#adb5bd" stroke-width="2"
+            marker-end="url(#arrow-gray)"
+            class="edge-line"/>
+      <!-- w1 label -->
+      <text id="label-w1"
+            x="238" y="194"
+            text-anchor="middle" font-size="13" fill="#495057"
+            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-style="italic" font-weight="600">w₁</text>
+
+      <!-- Edge 2→3 -->
+      <line id="edge-2-3"
+            x1="157" y1="327" x2="337" y2="263"
+            stroke="#adb5bd" stroke-width="2"
+            marker-end="url(#arrow-gray)"
+            class="edge-line"/>
+      <!-- w2 label -->
+      <text id="label-w2"
+            x="238" y="310"
+            text-anchor="middle" font-size="13" fill="#495057"
+            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-style="italic" font-weight="600">w₂</text>
+
+      <!-- Edge 3→4 -->
+      <line id="edge-3-4"
+            x1="419" y1="250" x2="559" y2="250"
+            stroke="#adb5bd" stroke-width="2"
+            marker-end="url(#arrow-gray)"
+            class="edge-line"/>
+      <!-- w3 label -->
+      <text id="label-w3"
+            x="490" y="238"
+            text-anchor="middle" font-size="13" fill="#495057"
+            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-style="italic" font-weight="600">w₃</text>
+
+      <!-- Nodes -->
+      <!-- Node 1 -->
+      <g id="node-1" role="graphics-symbol" aria-label="Node 1, input">
+        <circle id="node-1-circle" cx="120" cy="160" r="38"
+                fill="#f1f3f5" stroke="#adb5bd" stroke-width="2"
+                class="node-circle"/>
+        <text text-anchor="middle"
+              font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+          <tspan x="120" dy="157" font-size="18" font-weight="700" fill="#212529">1</tspan>
+          <tspan x="120" dy="18" font-size="11" fill="#868e96">input</tspan>
+        </text>
+      </g>
+
+      <!-- Node 2 -->
+      <g id="node-2" role="graphics-symbol" aria-label="Node 2, input">
+        <circle id="node-2-circle" cx="120" cy="340" r="38"
+                fill="#f1f3f5" stroke="#adb5bd" stroke-width="2"
+                class="node-circle"/>
+        <text text-anchor="middle"
+              font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+          <tspan x="120" dy="337" font-size="18" font-weight="700" fill="#212529">2</tspan>
+          <tspan x="120" dy="18" font-size="11" fill="#868e96">input</tspan>
+        </text>
+      </g>
+
+      <!-- Node 3 -->
+      <g id="node-3" role="graphics-symbol" aria-label="Node 3, hidden">
+        <circle id="node-3-circle" cx="380" cy="250" r="38"
+                fill="#f1f3f5" stroke="#adb5bd" stroke-width="2"
+                class="node-circle"/>
+        <text text-anchor="middle"
+              font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+          <tspan x="380" dy="247" font-size="18" font-weight="700" fill="#212529">3</tspan>
+          <tspan x="380" dy="18" font-size="11" fill="#868e96">hidden</tspan>
+        </text>
+      </g>
+
+      <!-- Node 4 -->
+      <g id="node-4" role="graphics-symbol" aria-label="Node 4, output">
+        <circle id="node-4-circle" cx="600" cy="250" r="38"
+                fill="#f1f3f5" stroke="#adb5bd" stroke-width="2"
+                class="node-circle"/>
+        <text text-anchor="middle"
+              font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+          <tspan x="600" dy="247" font-size="18" font-weight="700" fill="#212529">4</tspan>
+          <tspan x="600" dy="18" font-size="11" fill="#868e96">output</tspan>
+        </text>
+      </g>
+    </svg>
+  </section>
+
+  <!-- Right: Info Panel -->
+  <aside id="info-panel" aria-label="Step information panel">
+
+    <!-- Step header -->
+    <div class="step-header">
+      <span class="step-badge" id="step-badge" aria-live="polite">Step 0 / 15</span>
+      <div class="step-title" id="step-title"></div>
+    </div>
+
+    <!-- Description -->
+    <p class="description" id="step-description" aria-live="polite"></p>
+
+    <!-- Current function -->
+    <div class="info-section">
+      <div class="info-section-title">Current Function</div>
+      <div class="info-section-body">
+        <div class="current-fn" id="current-fn"></div>
+      </div>
+    </div>
+
+    <!-- Call stack -->
+    <div class="info-section">
+      <div class="info-section-title">Call Stack</div>
+      <div class="info-section-body">
+        <ul class="call-stack" id="call-stack" aria-label="Call stack"></ul>
+      </div>
+    </div>
+
+    <!-- Contributions map -->
+    <div class="info-section">
+      <div class="info-section-title">contributions map</div>
+      <div class="info-section-body">
+        <div class="contrib-map" id="contrib-map" aria-label="Contributions map"></div>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div id="callout-box" aria-live="polite" style="display:none"></div>
+
+    <!-- Navigation -->
+    <nav id="nav-bar" aria-label="Step navigation">
+      <div class="step-progress" role="progressbar" aria-valuemin="0" aria-valuemax="15"
+           aria-valuenow="0" id="progress-bar-container">
+        <div class="step-progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="btn-prev" aria-label="Previous step" disabled>← Prev</button>
+        <button class="nav-btn" id="btn-next" aria-label="Next step">Next →</button>
+      </div>
+      <div class="step-counter" id="step-counter" aria-live="polite"></div>
+      <div class="kbd-hint"><kbd>←</kbd> <kbd>→</kbd> arrow keys to navigate</div>
+    </nav>
+
+  </aside>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Node state visual configs ──────────────────────────────────────────────
+  const NODE_STYLES = {
+    normal:   { fill: '#f1f3f5', stroke: '#adb5bd', strokeWidth: 2 },
+    'on-stack': { fill: '#fff9db', stroke: '#f59f00', strokeWidth: 3 },
+    active:   { fill: '#e7f5ff', stroke: '#1971c2', strokeWidth: 3 },
+    done:     { fill: '#ebfbee', stroke: '#2f9e44', strokeWidth: 2 },
+  };
+
+  const EDGE_STYLES = {
+    normal: { stroke: '#adb5bd', strokeWidth: 2, marker: 'url(#arrow-gray)' },
+    active: { stroke: '#1971c2', strokeWidth: 3, marker: 'url(#arrow-blue)' },
+    done:   { stroke: '#2f9e44', strokeWidth: 2, marker: 'url(#arrow-green)' },
+  };
+
+  // ── Step data ──────────────────────────────────────────────────────────────
+  const STEPS = [
+    {
+      title: 'What is Training?',
+      description: 'Training adjusts weights and biases so the network learns to make better predictions. For each training example, backpropagation figures out how much each weight contributed to the error — then nudges it in the right direction.',
+      callout: { type: 'info', text: 'One call to contribute() + update() = one small step downhill on the loss curve.' },
+      nodes: { 1: 'normal', 2: 'normal', 3: 'normal', 4: 'normal' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'normal' },
+      callStack: [],
+      currentFn: null,
+      contribMap: [],
+    },
+    {
+      title: 'Forward Pass Complete',
+      description: 'Input values flowed forward through the network. Node 4 (output) produced prediction p. We know the truth y. Loss L = (y − p)² tells us how wrong we were. Now: which weights caused this error?',
+      callout: { type: 'info', text: "Backpropagation answers: 'how did each weight contribute to the loss?'" },
+      nodes: { 1: 'done', 2: 'done', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'done', '2-3': 'done', '3-4': 'done' },
+      callStack: [],
+      currentFn: null,
+      contribMap: [],
+    },
+    {
+      title: 'Starting Backpropagation',
+      description: 'public contribute(y, p) is called. It iterates over the input nodes and calls the recursive helper starting from each one.',
+      callout: null,
+      nodes: { 1: 'normal', 2: 'normal', 3: 'normal', 4: 'normal' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'normal' },
+      callStack: ['contribute(y, p)  ← public entry point'],
+      currentFn: 'contribute(y, p)',
+      contribMap: [],
+    },
+    {
+      title: 'contribute(1, y, p)',
+      description: 'Recursive helper called for input node 1. Node 1 has one neighbor: node 3. DFS will recurse into it first.',
+      callout: null,
+      nodes: { 1: 'active', 2: 'normal', 3: 'normal', 4: 'normal' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'normal' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)'],
+      currentFn: 'contribute(1, y, p)',
+      contribMap: [],
+    },
+    {
+      title: 'contribute(3, y, p)',
+      description: "Recursing deeper: node 3's neighbor is node 4. DFS goes deeper before coming back. Both nodes 1 and 3 are now on the call stack.",
+      callout: null,
+      nodes: { 1: 'on-stack', 2: 'normal', 3: 'active', 4: 'normal' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'normal' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)', 'contribute(3, y, p)'],
+      currentFn: 'contribute(3, y, p)',
+      contribMap: [],
+    },
+    {
+      title: 'contribute(4, y, p) — Base Case',
+      description: 'Node 4 is the output node: adjacencyList[4] is empty. This is the base case. The initial error signal is computed directly from the loss function. No more recursion.',
+      callout: { type: 'warning', text: 'Base case: outgoingContribution = −1 × (y − p) / (p × (1 − p))\nSeeds the error signal. The math is handled for you — just implement the recursion.' },
+      nodes: { 1: 'on-stack', 2: 'normal', 3: 'on-stack', 4: 'active' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'normal' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)', 'contribute(3, y, p)', 'contribute(4, y, p)  ← base case'],
+      currentFn: 'contribute(4, y, p)',
+      contribMap: [],
+    },
+    {
+      title: 'Return from contribute(4)',
+      description: "Node 4's contribution is stored in the contributions map. We pop back up the call stack to node 3, passing node 4's outgoingContribution as the incomingContribution.",
+      callout: { type: 'success', text: 'contributions[4] stored. Node 4 will never be recomputed.' },
+      nodes: { 1: 'on-stack', 2: 'normal', 3: 'active', 4: 'done' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'normal' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)', 'contribute(3, y, p)'],
+      currentFn: 'contribute(3, y, p)  ← resuming',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false }
+      ],
+    },
+    {
+      title: 'visitContributeNeighbor(w3, ...)',
+      description: "Back at node 3. incomingContribution = what came back from node 4. Call visitContributeNeighbor: this updates w3's delta (how much w3 should change) and accumulates outgoingContribution.",
+      callout: { type: 'info', text: 'For each neighbor: incomingContribution = result of recursive call on that neighbor.' },
+      nodes: { 1: 'on-stack', 2: 'normal', 3: 'active', 4: 'done' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'active' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)', 'contribute(3, y, p)'],
+      currentFn: 'visitContributeNeighbor(w3, incoming, outgoing)',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false }
+      ],
+    },
+    {
+      title: 'visitContributeNode(3, outgoing)',
+      description: "Now call visitContributeNode: scales outgoingContribution by node 3's activation derivative (chain rule) and accumulates the result into node 3's bias delta.",
+      callout: null,
+      nodes: { 1: 'on-stack', 2: 'normal', 3: 'active', 4: 'done' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)', 'contribute(3, y, p)'],
+      currentFn: 'visitContributeNode(3, outgoing)',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false }
+      ],
+    },
+    {
+      title: 'Store contributions[3] and return',
+      description: "Store node 3's outgoingContribution in the map, then return it. We pop back to node 1 with node 3's contribution as incomingContribution.",
+      callout: { type: 'success', text: "contributions[3] stored. Key insight: if node 2 also connects to node 3, we won't recompute it." },
+      nodes: { 1: 'active', 2: 'normal', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'normal', '2-3': 'normal', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)'],
+      currentFn: 'contribute(1, y, p)  ← resuming',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false },
+        { key: '3', value: 'outgoing₃', highlighted: false }
+      ],
+    },
+    {
+      title: 'visitContributeNeighbor(w1, ...)',
+      description: "Back at node 1. incomingContribution = outgoing from node 3. Call visitContributeNeighbor to update w1's delta.",
+      callout: null,
+      nodes: { 1: 'active', 2: 'normal', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'active', '2-3': 'normal', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(1, y, p)'],
+      currentFn: 'visitContributeNeighbor(w1, incoming, outgoing)',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false },
+        { key: '3', value: 'outgoing₃', highlighted: false }
+      ],
+    },
+    {
+      title: 'Node 1 is an Input Node — Skip visitContributeNode',
+      description: 'Input nodes have no bias to update, so visitContributeNode is NOT called for node 1. Return from contribute(1).',
+      callout: { type: 'info', text: 'Input nodes skip visitContributeNode — they have no bias.' },
+      nodes: { 1: 'done', 2: 'normal', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'done', '2-3': 'normal', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point'],
+      currentFn: null,
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false },
+        { key: '3', value: 'outgoing₃', highlighted: false }
+      ],
+    },
+    {
+      title: 'contribute(2, y, p)',
+      description: 'public contribute() now processes node 2. Call the recursive helper. Node 2 has one neighbor: node 3.',
+      callout: null,
+      nodes: { 1: 'done', 2: 'active', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'done', '2-3': 'normal', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(2, y, p)'],
+      currentFn: 'contribute(2, y, p)',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false },
+        { key: '3', value: 'outgoing₃', highlighted: false }
+      ],
+    },
+    {
+      title: 'Map Hit: contributions[3] Already Stored',
+      description: 'contribute(2) checks its neighbor: node 3. Node 3 is already in the contributions map! Use the stored value instead of recursing. No DFS needed.',
+      callout: { type: 'success', text: 'This is why the contributions map matters: node 3 is shared by both input nodes, but computed only once.' },
+      nodes: { 1: 'done', 2: 'active', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'done', '2-3': 'normal', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(2, y, p)'],
+      currentFn: null,
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false },
+        { key: '3', value: 'outgoing₃  ← reused!', highlighted: true }
+      ],
+    },
+    {
+      title: 'visitContributeNeighbor(w2, contributions[3], ...)',
+      description: "incomingContribution = contributions[3] (from map). Call visitContributeNeighbor to update w2's delta.",
+      callout: null,
+      nodes: { 1: 'done', 2: 'active', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'done', '2-3': 'active', '3-4': 'done' },
+      callStack: ['contribute(y, p)  ← public entry point', 'contribute(2, y, p)'],
+      currentFn: 'visitContributeNeighbor(w2, contributions[3], outgoing)',
+      contribMap: [
+        { key: '4', value: 'outgoing₄  (error signal)', highlighted: false },
+        { key: '3', value: 'outgoing₃', highlighted: false }
+      ],
+    },
+    {
+      title: 'Backpropagation Complete',
+      description: 'Node 2 skips visitContributeNode (input node). All weight deltas and bias deltas have been accumulated. Now call update() to apply them: weight -= learningRate × delta, bias -= learningRate × delta.',
+      callout: { type: 'success', text: 'One training step complete. update() applies the nudges, then resets all deltas to zero for the next example.' },
+      nodes: { 1: 'done', 2: 'done', 3: 'done', 4: 'done' },
+      edges: { '1-3': 'done', '2-3': 'done', '3-4': 'done' },
+      callStack: [],
+      currentFn: null,
+      contribMap: [
+        { key: '4', value: 'outgoing₄', highlighted: false },
+        { key: '3', value: 'outgoing₃', highlighted: false }
+      ],
+    },
+  ];
+
+  const TOTAL = STEPS.length; // 16
+
+  // ── DOM refs ────────────────────────────────────────────────────────────────
+  const elBadge      = document.getElementById('step-badge');
+  const elTitle      = document.getElementById('step-title');
+  const elDesc       = document.getElementById('step-description');
+  const elFn         = document.getElementById('current-fn');
+  const elStack      = document.getElementById('call-stack');
+  const elMap        = document.getElementById('contrib-map');
+  const elCallout    = document.getElementById('callout-box');
+  const elCounter    = document.getElementById('step-counter');
+  const elProgress   = document.getElementById('progress-fill');
+  const elProgressBC = document.getElementById('progress-bar-container');
+  const btnPrev      = document.getElementById('btn-prev');
+  const btnNext      = document.getElementById('btn-next');
+
+  const nodeCircles = {
+    1: document.getElementById('node-1-circle'),
+    2: document.getElementById('node-2-circle'),
+    3: document.getElementById('node-3-circle'),
+    4: document.getElementById('node-4-circle'),
+  };
+  const edgeLines = {
+    '1-3': document.getElementById('edge-1-3'),
+    '2-3': document.getElementById('edge-2-3'),
+    '3-4': document.getElementById('edge-3-4'),
+  };
+
+  // ── State ───────────────────────────────────────────────────────────────────
+  let currentStep = 0;
+
+  // ── Render ──────────────────────────────────────────────────────────────────
+  function render(step) {
+    const s = STEPS[step];
+
+    // Badge + title
+    elBadge.textContent = `Step ${step} / ${TOTAL - 1}`;
+    elTitle.textContent = s.title;
+
+    // Description
+    elDesc.textContent = s.description;
+
+    // Current function
+    if (s.currentFn) {
+      elFn.textContent = s.currentFn;
+      elFn.classList.remove('empty');
+    } else {
+      elFn.textContent = '—';
+      elFn.classList.add('empty');
+    }
+
+    // Call stack
+    elStack.innerHTML = '';
+    if (s.callStack.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = '';
+      const empty = document.createElement('span');
+      empty.className = 'call-stack-empty';
+      empty.textContent = '(empty)';
+      elStack.appendChild(empty);
+    } else {
+      s.callStack.forEach((entry, i) => {
+        const li = document.createElement('li');
+        li.textContent = entry;
+        if (i === s.callStack.length - 1) li.classList.add('top');
+        elStack.appendChild(li);
+      });
+    }
+
+    // Contributions map
+    elMap.innerHTML = '';
+    if (s.contribMap.length === 0) {
+      const empty = document.createElement('span');
+      empty.className = 'contrib-map-empty';
+      empty.textContent = '(empty)';
+      elMap.appendChild(empty);
+    } else {
+      s.contribMap.forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'contrib-entry' + (entry.highlighted ? ' highlighted' : '');
+        div.innerHTML =
+          `<span class="contrib-key">contributions[${entry.key}]</span>` +
+          `<span class="contrib-arrow">→</span>` +
+          `<span>${entry.value}</span>`;
+        elMap.appendChild(div);
+      });
+    }
+
+    // Callout
+    if (s.callout) {
+      elCallout.style.display = 'block';
+      elCallout.className = `callout ${s.callout.type}`;
+      elCallout.textContent = s.callout.text;
+    } else {
+      elCallout.style.display = 'none';
+    }
+
+    // Node visual states
+    Object.entries(s.nodes).forEach(([id, state]) => {
+      const circ = nodeCircles[id];
+      if (!circ) return;
+      const style = NODE_STYLES[state];
+      circ.style.fill = style.fill;
+      circ.style.stroke = style.stroke;
+      circ.style.strokeWidth = style.strokeWidth;
+    });
+
+    // Edge visual states
+    Object.entries(s.edges).forEach(([key, state]) => {
+      const line = edgeLines[key];
+      if (!line) return;
+      const style = EDGE_STYLES[state];
+      line.style.stroke = style.stroke;
+      line.style.strokeWidth = style.strokeWidth;
+      line.setAttribute('marker-end', style.marker);
+    });
+
+    // Navigation
+    btnPrev.disabled = step === 0;
+    btnNext.disabled = step === TOTAL - 1;
+    elCounter.textContent = `Step ${step + 1} of ${TOTAL}`;
+    const pct = TOTAL > 1 ? (step / (TOTAL - 1)) * 100 : 100;
+    elProgress.style.width = pct + '%';
+    elProgressBC.setAttribute('aria-valuenow', step);
+  }
+
+  function goTo(step) {
+    currentStep = Math.max(0, Math.min(TOTAL - 1, step));
+    render(currentStep);
+  }
+
+  // ── Event listeners ─────────────────────────────────────────────────────────
+  btnPrev.addEventListener('click', () => goTo(currentStep - 1));
+  btnNext.addEventListener('click', () => goTo(currentStep + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  goTo(currentStep - 1);
+    if (e.key === 'ArrowRight') goTo(currentStep + 1);
+  });
+
+  // ── Init ────────────────────────────────────────────────────────────────────
+  render(0);
+
+})();
+</script>
+</body>
+</html>
