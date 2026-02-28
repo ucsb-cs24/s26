@@ -473,21 +473,21 @@
         <!-- Input arrows (from left) -->
         <!-- W arrow -->
         <line x1="90" y1="185" x2="256" y2="195" stroke="#1971c2" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
-        <rect x="22" y="172" width="68" height="26" rx="5" fill="#e7f5ff" stroke="#1971c2" stroke-width="1.5"/>
-        <text x="56" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#1971c2">W</text>
-        <text x="56" y="203" text-anchor="middle" font-size="10" fill="#1971c2">(weights)</text>
+        <rect x="0" y="165" width="90" height="40" rx="6" fill="#e7f5ff" stroke="#1971c2" stroke-width="2"/>
+        <text x="45" y="183" text-anchor="middle" font-size="15" font-weight="700" fill="#1971c2">W</text>
+        <text x="45" y="199" text-anchor="middle" font-size="11" fill="#1971c2">(weights)</text>
 
         <!-- b arrow -->
         <line x1="90" y1="230" x2="256" y2="225" stroke="#1971c2" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
-        <rect x="22" y="218" width="68" height="26" rx="5" fill="#e7f5ff" stroke="#1971c2" stroke-width="1.5"/>
-        <text x="56" y="236" text-anchor="middle" font-size="13" font-weight="700" fill="#1971c2">b</text>
-        <text x="56" y="249" text-anchor="middle" font-size="10" fill="#1971c2">(biases)</text>
+        <rect x="0" y="210" width="90" height="40" rx="6" fill="#e7f5ff" stroke="#1971c2" stroke-width="2"/>
+        <text x="45" y="228" text-anchor="middle" font-size="15" font-weight="700" fill="#1971c2">b</text>
+        <text x="45" y="244" text-anchor="middle" font-size="11" fill="#1971c2">(biases)</text>
 
         <!-- (x, y) training data arrow (gray dashed) -->
         <line x1="90" y1="278" x2="256" y2="262" stroke="#adb5bd" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-gray)"/>
-        <rect x="8" y="263" width="82" height="30" rx="5" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.5"/>
-        <text x="49" y="281" text-anchor="middle" font-size="11" fill="#495057">(x, y)</text>
-        <text x="49" y="294" text-anchor="middle" font-size="10" fill="#868e96">training data</text>
+        <rect x="0" y="253" width="90" height="50" rx="6" fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text x="45" y="273" text-anchor="middle" font-size="13" fill="#495057">(x, y)</text>
+        <text x="45" y="290" text-anchor="middle" font-size="11" fill="#868e96">training data</text>
 
         <!-- Output arrow (to right) -->
         <line x1="504" y1="225" x2="596" y2="225" stroke="#2f9e44" stroke-width="2.5" marker-end="url(#arrow-green)"/>
@@ -767,7 +767,7 @@
     // Step 4
     {
       title: 'Every Set of Weights Maps to a Cost',
-      desc: 'If we vary a single weight <strong>w</strong> and compute C for each value, we trace out a curve. The blue dot is our current position — high cost, bad weights. We want to reach the bottom of the curve.',
+      desc: '<strong>Vary one weight → different prediction → different Cost value.</strong> Every possible value of <strong>w</strong> maps to a different C, tracing out a curve. The blue dot is our current position — high cost, bad weights. We want to slide down to the minimum.',
       callout: null,
       scene: 'scene-loss-curve',
       lossCurve: {
@@ -987,12 +987,13 @@
         code:
           'initialize W, b randomly\n\n' +
           '<span class="hl-blue">for</span> epoch in 1..max_epochs:\n' +
+          '  ∇W, ∇b ← 0\n' +
           '  <span class="hl-blue">for</span> (x, y) in dataset:\n\n' +
           '    <span class="hl-blue">1.</span> ŷ = forward(x, W, b)\n\n' +
           '    <span class="hl">2.</span> C = loss(ŷ, y)\n\n' +
-          '    <span class="hl-pink">3.</span> ∇W, ∇b = backprop(C)\n\n' +
-          '    <span class="hl-green">4.</span> W ← W − η·∇W\n' +
-          '       b ← b − η·∇b',
+          '    <span class="hl-pink">3.</span> ∇W, ∇b += backprop(C)\n\n' +
+          '  <span class="hl-green">4.</span> W ← W − η·∇W\n' +
+          '     b ← b − η·∇b',
         vars: [
           { k: 'epoch',    v: 'one full pass through the training data' },
           { k: '∇W, ∇b',  v: 'gradients of C w.r.t. all W and b' },
