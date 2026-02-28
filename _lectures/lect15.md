@@ -16,9 +16,11 @@ We will review PA03 starter code: <https://github.com/ucsb-cs24-s25/STARTER-pa03
 * DFS + complexity analysis
 * Leetcode problem: https://leetcode.com/problems/maximum-number-of-fish-in-a-grid/description/
 
-# DFS Step-Through Visualizer
+# Visualizers
 
 [Interactive DFS Visualizer]({{site.baseurl}}/assets/dfs_viz.html){:target="_blank"}
+
+[Interactive Backpropagation Visualizer (PA03)]({{site.baseurl}}/assets/backprop_viz.html){:target="_blank"}
 
 
 
