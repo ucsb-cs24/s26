@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depth-First Search — CS24 Visualization</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-bg: #f8f9fa;
+    --color-panel: #ffffff;
+    --color-border: #dee2e6;
+    --color-muted: #868e96;
+    --color-text: #212529;
+    --color-green-bg: #d3f9d8;
+    --color-yellow-bg: #fff3bf;
+    --color-info-bg: #e7f5ff;
+    --color-info-border: #1971c2;
+    --color-warn-bg: #fff9db;
+    --color-warn-border: #f59f00;
+    --color-success-bg: #ebfbee;
+    --color-success-border: #2f9e44;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* ── Progress bar ─────────────────────────────────────── */
+  #progress-bar-outer {
+    width: 100%;
+    height: 4px;
+    background: #dee2e6;
+    flex-shrink: 0;
+  }
+  #progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, #3b5bdb, #1971c2);
+    transition: width 0.35s ease;
+    width: 0%;
+  }
+
+  /* ── Header ───────────────────────────────────────────── */
+  header {
+    background: #1c2b4a;
+    color: #fff;
+    padding: 11px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  header span.subtitle {
+    font-size: 13px;
+    color: #adb5bd;
+  }
+  #header-step-counter {
+    font-size: 13px;
+    color: #74c0fc;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Mode toggle buttons */
+  .mode-toggle {
+    display: flex;
+    gap: 6px;
+  }
+  .mode-btn {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 13px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    border: 2px solid #4a6fa5;
+    background: transparent;
+    color: #adb5bd;
+    letter-spacing: 0.01em;
+  }
+  .mode-btn.active {
+    background: #3b5bdb;
+    border-color: #3b5bdb;
+    color: #ffffff;
+  }
+  .mode-btn:hover:not(.active) {
+    background: #2a3d6e;
+    color: #ffffff;
+  }
+
+  /* ── Description bar (full-width) ────────────────────── */
+  #desc-bar {
+    background: var(--color-panel);
+    border-bottom: 1px solid var(--color-border);
+    padding: 11px 20px 13px;
+    flex-shrink: 0;
+  }
+  #step-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1c2b4a;
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+  #step-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #343a40;
+    white-space: pre-line;
+  }
+
+  #callout-row {
+    margin-top: 9px;
+    display: none;
+  }
+  #callout-box {
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  #callout-box.info {
+    background: var(--color-info-bg);
+    border-left: 4px solid var(--color-info-border);
+    color: #1a4a7a;
+  }
+  #callout-box.warning {
+    background: var(--color-warn-bg);
+    border-left: 4px solid var(--color-warn-border);
+    color: #7a5000;
+  }
+  #callout-box.success {
+    background: var(--color-success-bg);
+    border-left: 4px solid var(--color-success-border);
+    color: #1a5e2a;
+  }
+
+  /* ── Main: SVG + side panel ──────────────────────────── */
+  main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  #svg-panel {
+    flex: 6;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 14px;
+    background: var(--color-panel);
+    border-right: 1px solid var(--color-border);
+  }
+  #svg-panel svg {
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+  }
+  .node-circle {
+    transition: fill 0.25s, stroke 0.25s, stroke-width 0.25s;
+  }
+  .graph-edge {
+    transition: stroke 0.25s, stroke-width 0.25s, stroke-dasharray 0.25s;
+  }
+
+  #side-panel {
+    flex: 4;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-panel);
+    overflow: hidden;
+  }
+  .sub-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sub-panel:last-child { border-bottom: none; }
+  .sub-panel-header {
+    background: #f1f3f5;
+    padding: 7px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #495057;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+  .sub-panel-body {
+    padding: 8px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Algorithm panel — fixed height */
+  #panel-algo {
+    flex: none;
+  }
+  #panel-algo .sub-panel-body {
+    overflow: visible;
+  }
+
+  /* Call stack panel — grows */
+  #panel-stack {
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Visited panel — fixed height */
+  #panel-visited {
+    flex: none;
+  }
+  #panel-visited .sub-panel-body {
+    overflow: visible;
+  }
+
+  .empty-hint {
+    color: var(--color-muted);
+    font-style: italic;
+    font-size: 13px;
+    padding: 4px 2px;
+  }
+
+  /* ── Algorithm pseudocode ─────────────────────────────── */
+  .algo-fn-header {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #868e96;
+    padding: 3px 4px 5px 4px;
+    display: block;
+  }
+  .algo-line {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    color: #343a40;
+    background: transparent;
+    display: block;
+    line-height: 1.5;
+    transition: background 0.2s, color 0.2s;
+  }
+  .algo-line.highlighted {
+    background: #dbe4ff;
+    color: #1c3d8f;
+    font-weight: 700;
+  }
+
+  /* ── Call stack items ─────────────────────────────────── */
+  .stack-item {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    background: #fff9db;
+    color: #5c3d00;
+    word-break: break-all;
+    line-height: 1.4;
+  }
+  .stack-item.top-of-stack {
+    background: #3b5bdb;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  /* ── Visited & visit order ────────────────────────────── */
+  .visited-row {
+    margin-bottom: 6px;
+  }
+  .visited-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #868e96;
+    margin-bottom: 3px;
+  }
+  .visited-value {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #343a40;
+  }
+
+  /* ── Footer controls ──────────────────────────────────── */
+  #controls {
+    padding: 11px 20px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-panel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  button.nav-btn {
+    background: #3b5bdb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    letter-spacing: 0.01em;
+  }
+  button.nav-btn:hover:not(:disabled) { background: #2f4ac9; }
+  button.nav-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+  #step-counter {
+    font-size: 14px;
+    color: var(--color-muted);
+    min-width: 90px;
+    text-align: center;
+  }
+  #kbd-hint {
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+
+  /* ── Poll question box ────────────────────────────────── */
+  #poll-row {
+    margin-top: 9px;
+    display: none;
+  }
+  #poll-box {
+    background: #f3f0ff;
+    border-left: 4px solid #7048e8;
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+  .poll-header {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #5f3dc4;
+    margin-bottom: 5px;
+  }
+  .poll-question {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1c2b4a;
+    margin-bottom: 7px;
+    line-height: 1.4;
+  }
+  .poll-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .poll-choice {
+    display: flex;
+    gap: 7px;
+    font-size: 13px;
+    color: #495057;
+    line-height: 1.4;
+  }
+  .poll-choice-key {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #7048e8;
+    min-width: 16px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar-outer"><div id="progress-bar-inner"></div></div>
+
+<header>
+  <h1>Depth-First Search — CS24</h1>
+  <div class="header-right">
+    <span class="subtitle">exploreDFS Step-Through</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btn-mode-0">Source: 0</button>
+      <button class="mode-btn" id="btn-mode-3">Source: 3</button>
+      <button class="mode-btn" id="btn-mode-cc">Disconnected</button>
+    </div>
+    <span id="header-step-counter">step 0 of 12</span>
+  </div>
+</header>
+
+<div id="desc-bar">
+  <div id="step-title"></div>
+  <div id="step-desc"></div>
+  <div id="callout-row">
+    <div id="callout-box"></div>
+  </div>
+  <div id="poll-row">
+    <div id="poll-box">
+      <div class="poll-header">&#128202; Poll Question</div>
+      <div class="poll-question" id="poll-question-text"></div>
+      <div class="poll-choices" id="poll-choices-list"></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- SVG Panel (flex:6) -->
+  <div id="svg-panel">
+    <svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg"
+         aria-label="Depth-first search graph visualization">
+
+      <!-- ════════════════ EDGES ════════════════ -->
+      <!-- 0-2: (90,155)–(450,92) -->
+      <line id="edge-0-2" class="graph-edge"
+        x1="120" y1="148" x2="421" y2="96"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- 1-2: (370,388)–(450,92) -->
+      <line id="edge-1-2" class="graph-edge"
+        x1="378" y1="358" x2="447" y2="121"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- 1-3: (370,388)–(205,258) -->
+      <line id="edge-1-3" class="graph-edge"
+        x1="345" y1="372" x2="224" y2="274"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- 1-4: (370,388)–(600,252) -->
+      <line id="edge-1-4" class="graph-edge"
+        x1="399" y1="374" x2="576" y2="267"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- 2-3: (450,92)–(205,258) -->
+      <line id="edge-2-3" class="graph-edge"
+        x1="422" y1="107" x2="219" y2="243"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- 2-4: (450,92)–(600,252) -->
+      <line id="edge-2-4" class="graph-edge"
+        x1="479" y1="103" x2="577" y2="224"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- 4-5: (600,252)–(695,362) -->
+      <line id="edge-4-5" class="graph-edge"
+        x1="624" y1="272" x2="676" y2="341"
+        stroke="#adb5bd" stroke-width="2.5"/>
+
+      <!-- ════════════════ NODES ════════════════ -->
+      <!-- Node 0: cx=90, cy=155 -->
+      <g id="node-group-0">
+        <circle id="node-0" class="node-circle" cx="90" cy="155" r="30"
+                fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text id="node-label-0" x="90" y="155" text-anchor="middle"
+              font-size="18" font-weight="700" fill="#495057"
+              dominant-baseline="central"
+              font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">0</text>
+      </g>
+
+      <!-- Node 1: cx=370, cy=388 -->
+      <g id="node-group-1">
+        <circle id="node-1" class="node-circle" cx="370" cy="388" r="30"
+                fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text id="node-label-1" x="370" y="388" text-anchor="middle"
+              font-size="18" font-weight="700" fill="#495057"
+              dominant-baseline="central"
+              font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">1</text>
+      </g>
+
+      <!-- Node 2: cx=450, cy=92 -->
+      <g id="node-group-2">
+        <circle id="node-2" class="node-circle" cx="450" cy="92" r="30"
+                fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text id="node-label-2" x="450" y="92" text-anchor="middle"
+              font-size="18" font-weight="700" fill="#495057"
+              dominant-baseline="central"
+              font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">2</text>
+      </g>
+
+      <!-- Node 3: cx=205, cy=258 -->
+      <g id="node-group-3">
+        <circle id="node-3" class="node-circle" cx="205" cy="258" r="30"
+                fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text id="node-label-3" x="205" y="258" text-anchor="middle"
+              font-size="18" font-weight="700" fill="#495057"
+              dominant-baseline="central"
+              font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">3</text>
+      </g>
+
+      <!-- Node 4: cx=600, cy=252 -->
+      <g id="node-group-4">
+        <circle id="node-4" class="node-circle" cx="600" cy="252" r="30"
+                fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text id="node-label-4" x="600" y="252" text-anchor="middle"
+              font-size="18" font-weight="700" fill="#495057"
+              dominant-baseline="central"
+              font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">4</text>
+      </g>
+
+      <!-- Node 5: cx=695, cy=362 -->
+      <g id="node-group-5">
+        <circle id="node-5" class="node-circle" cx="695" cy="362" r="30"
+                fill="#f8f9fa" stroke="#adb5bd" stroke-width="2"/>
+        <text id="node-label-5" x="695" y="362" text-anchor="middle"
+              font-size="18" font-weight="700" fill="#495057"
+              dominant-baseline="central"
+              font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">5</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Side panel (flex:4): Algorithm + Call Stack + Visited -->
+  <div id="side-panel">
+
+    <!-- Algorithm panel -->
+    <div class="sub-panel" id="panel-algo">
+      <div class="sub-panel-header">Algorithm</div>
+      <div class="sub-panel-body">
+        <span class="algo-fn-header">exploreDFS(v)</span>
+        <span class="algo-line" id="algo-line-0">&nbsp;&nbsp;v.visited &#x2190; true</span>
+        <span class="algo-line" id="algo-line-1">&nbsp;&nbsp;for each edge (v,w)</span>
+        <span class="algo-line" id="algo-line-2">&nbsp;&nbsp;&nbsp;&nbsp;if not w.visited</span>
+        <span class="algo-line" id="algo-line-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exploreDFS(w)</span>
+        <!-- Mode C: DepthFirstSearch(G) outer loop -->
+        <div id="algo-outer-section" style="display:none; margin-top:8px; border-top:1px solid #dee2e6; padding-top:6px;">
+          <span class="algo-fn-header">DepthFirstSearch(G)</span>
+          <span class="algo-line" id="algo-line-10">&nbsp;&nbsp;for each v in G</span>
+          <span class="algo-line" id="algo-line-11">&nbsp;&nbsp;&nbsp;&nbsp;if not v.visited</span>
+          <span class="algo-line" id="algo-line-12">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exploreDFS(v)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call Stack panel -->
+    <div class="sub-panel" id="panel-stack">
+      <div class="sub-panel-header">Call Stack</div>
+      <div class="sub-panel-body" id="call-stack-body"></div>
+    </div>
+
+    <!-- Visited & Visit Order panel -->
+    <div class="sub-panel" id="panel-visited">
+      <div class="sub-panel-header">Visited &amp; Visit Order</div>
+      <div class="sub-panel-body">
+        <div class="visited-row">
+          <div class="visited-label">Visited set</div>
+          <div class="visited-value" id="visited-set-display">(empty)</div>
+        </div>
+        <div class="visited-row">
+          <div class="visited-label">Visit order</div>
+          <div class="visited-value" id="visit-order-display">(none)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer id="controls">
+  <div class="btn-row">
+    <button class="nav-btn" id="btn-prev">&#8592; Prev</button>
+    <span id="step-counter">step 0 of 12</span>
+    <button class="nav-btn" id="btn-next">Next &#8594;</button>
+  </div>
+  <div id="kbd-hint">Use &#8592; &#8594; arrow keys to navigate</div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ─── Node / edge style tables ────────────────────────────────────────────
+  const NODE_STYLES = {
+    'unvisited': { fill: '#f8f9fa', stroke: '#adb5bd', strokeWidth: 2,   textColor: '#495057' },
+    'active':    { fill: '#dbe4ff', stroke: '#3b5bdb', strokeWidth: 3.5, textColor: '#1c3d8f' },
+    'on-stack':  { fill: '#fff9db', stroke: '#f59f00', strokeWidth: 3,   textColor: '#5c3d00' },
+    'done':      { fill: '#ebfbee', stroke: '#2f9e44', strokeWidth: 2,   textColor: '#2b8a3e' },
+  };
+
+  const EDGE_STYLES = {
+    'normal':  { stroke: '#adb5bd', strokeWidth: 2.5, dasharray: '' },
+    'tree':    { stroke: '#1971c2', strokeWidth: 4,   dasharray: '' },
+    'back':    { stroke: '#f76707', strokeWidth: 2.5, dasharray: '7,4' },
+    'done':    { stroke: '#2f9e44', strokeWidth: 2.5, dasharray: '' },
+    'removed': { stroke: '#dee2e6', strokeWidth: 1.5, dasharray: '3,6' },
+  };
+
+  const ALL_NODES = [0, 1, 2, 3, 4, 5];
+  const ALL_EDGES = ['0-2', '1-2', '1-3', '1-4', '2-3', '2-4', '4-5'];
+
+  // ─── Helper builders ─────────────────────────────────────────────────────
+  function allNodes(s) { const o = {}; ALL_NODES.forEach(n => { o[n] = s; }); return o; }
+  function allEdges(s) { const o = {}; ALL_EDGES.forEach(e => { o[e] = s; }); return o; }
+
+  function nodes(overrides) {
+    const base = allNodes('unvisited');
+    Object.assign(base, overrides);
+    return base;
+  }
+
+  function edges(overrides) {
+    const base = allEdges('normal');
+    Object.assign(base, overrides);
+    return base;
+  }
+
+  // ─── Mode A: Source 0 (13 steps, index 0–12) ────────────────────────────
+  const STEPS_A = [
+    // Step 0
+    {
+      title: 'exploreDFS — Graph Introduction',
+      desc: 'Undirected graph, 6 vertices (0–5), 7 edges.\nAdjacency list (neighbors in ascending order):\n  0:[2]   1:[2,3,4]   2:[0,1,3,4]   3:[1,2]   4:[1,2,5]   5:[4]\nSource vertex 0 is highlighted. We will call exploreDFS(0).',
+      nodes: nodes({ 0: 'active' }),
+      edges: allEdges('normal'),
+      stack: [], visited: [], visitOrder: [], algoLine: -1, callout: null,
+    },
+    // Step 1
+    {
+      title: 'Call exploreDFS(0)',
+      desc: 'v.visited ← true: mark vertex 0 as visited.\nPush exploreDFS(0) onto the call stack.\nVisit order: [ 0 ].',
+      nodes: nodes({ 0: 'active' }),
+      edges: allEdges('normal'),
+      stack: ['exploreDFS(0)'], visited: [0], visitOrder: [0], algoLine: 0, callout: null,
+    },
+    // Step 2
+    {
+      title: 'Neighbor 2: not visited → exploreDFS(2)',
+      desc: 'Neighbors of 0: [2].\nif not 2.visited → true → call exploreDFS(2).\nMark 2 visited. Visit order: [ 0, 2 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'active' }),
+      edges: edges({ '0-2': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)'], visited: [0, 2], visitOrder: [0, 2], algoLine: 3, callout: null,
+    },
+    // Step 3
+    {
+      title: 'exploreDFS(2): neighbor 0 already visited',
+      desc: 'Neighbors of 2: [0, 1, 3, 4].\nCheck 0: already visited → skip.\n(The visited check prevents following the edge back to 0 and looping forever.)',
+      nodes: nodes({ 0: 'on-stack', 2: 'active' }),
+      edges: edges({ '0-2': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)'], visited: [0, 2], visitOrder: [0, 2], algoLine: 2,
+      callout: { type: 'info', text: 'if not 0.visited → false → skip. Without this check, DFS on undirected graphs would recurse infinitely.' },
+    },
+    // Step 4
+    {
+      title: 'Neighbor 1: not visited → exploreDFS(1)',
+      desc: 'Next neighbor of 2: vertex 1. if not 1.visited → true → call exploreDFS(1).\nMark 1 visited. Visit order: [ 0, 2, 1 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'active' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(1)'], visited: [0, 2, 1], visitOrder: [0, 2, 1], algoLine: 3, callout: null,
+    },
+    // Step 5
+    {
+      title: 'Neighbor 3: not visited → exploreDFS(3)',
+      desc: 'Neighbors of 1: [2, 3, 4].\nCheck 2: visited → skip (parent edge).\nCheck 3: not visited → call exploreDFS(3). Mark 3 visited. Visit order: [ 0, 2, 1, 3 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'on-stack', 3: 'active' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(1)', 'exploreDFS(3)'], visited: [0, 2, 1, 3], visitOrder: [0, 2, 1, 3], algoLine: 3, callout: null,
+    },
+    // Step 6
+    {
+      title: 'exploreDFS(3): all neighbors visited → return',
+      desc: 'Neighbors of 3: [1, 2].\nCheck 1: visited → skip (parent). Check 2: visited → skip (back edge — 2 is ancestor, not parent).\nReturn from exploreDFS(3). Pop call stack.',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'on-stack', 3: 'done' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree', '2-3': 'back' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(1)'], visited: [0, 2, 1, 3], visitOrder: [0, 2, 1, 3], algoLine: 2,
+      callout: { type: 'success', text: 'Backtrack to exploreDFS(1). DFS goes as deep as possible, then backtracks to try the next branch.' },
+    },
+    // Step 7
+    {
+      title: 'Neighbor 4: not visited → exploreDFS(4)',
+      desc: 'Back in exploreDFS(1). Next neighbor: 4. Not visited → call exploreDFS(4).\nMark 4 visited. Visit order: [ 0, 2, 1, 3, 4 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'on-stack', 3: 'done', 4: 'active' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree', '2-3': 'back', '1-4': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(1)', 'exploreDFS(4)'], visited: [0, 2, 1, 3, 4], visitOrder: [0, 2, 1, 3, 4], algoLine: 3, callout: null,
+    },
+    // Step 8
+    {
+      title: 'exploreDFS(4): skip 1,2; recurse into 5',
+      desc: 'Neighbors of 4: [1, 2, 5].\nCheck 1: visited → skip. Check 2: visited → skip (back edge — 2 is not 4\'s parent).\nCheck 5: not visited → call exploreDFS(5). Mark 5. Visit order: [ 0, 2, 1, 3, 4, 5 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'on-stack', 3: 'done', 4: 'on-stack', 5: 'active' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree', '2-3': 'back', '1-4': 'tree', '2-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(1)', 'exploreDFS(4)', 'exploreDFS(5)'], visited: [0, 2, 1, 3, 4, 5], visitOrder: [0, 2, 1, 3, 4, 5], algoLine: 3, callout: null,
+    },
+    // Step 9
+    {
+      title: 'exploreDFS(5): neighbor 4 visited → return',
+      desc: 'Neighbors of 5: [4]. Check 4: visited → skip (parent).\nNo more neighbors. Return from exploreDFS(5).',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'on-stack', 3: 'done', 4: 'on-stack', 5: 'done' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree', '2-3': 'back', '1-4': 'tree', '2-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(1)', 'exploreDFS(4)'], visited: [0, 2, 1, 3, 4, 5], visitOrder: [0, 2, 1, 3, 4, 5], algoLine: 2,
+      callout: { type: 'success', text: 'Bottom of this branch reached. Backtracking all the way up through the call stack.' },
+    },
+    // Step 10
+    {
+      title: 'Backtrack: return from exploreDFS(4) and (1)',
+      desc: 'No more unvisited neighbors in exploreDFS(4) → return.\nNo more unvisited neighbors in exploreDFS(1) → return.\nTwo pops from the call stack.',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 1: 'done', 3: 'done', 4: 'done', 5: 'done' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree', '2-3': 'back', '1-4': 'tree', '2-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(0)', 'exploreDFS(2)'], visited: [0, 2, 1, 3, 4, 5], visitOrder: [0, 2, 1, 3, 4, 5], algoLine: -1, callout: null,
+    },
+    // Step 11
+    {
+      title: 'Back in exploreDFS(2): skip 3,4; return',
+      desc: 'Continue in exploreDFS(2). Remaining neighbors: 3 (visited), 4 (visited) → skip both.\nReturn from exploreDFS(2).',
+      nodes: nodes({ 0: 'on-stack', 1: 'done', 2: 'done', 3: 'done', 4: 'done', 5: 'done' }),
+      edges: edges({ '0-2': 'tree', '1-2': 'tree', '1-3': 'tree', '2-3': 'back', '1-4': 'tree', '2-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(0)'], visited: [0, 2, 1, 3, 4, 5], visitOrder: [0, 2, 1, 3, 4, 5], algoLine: 2, callout: null,
+    },
+    // Step 12
+    {
+      title: 'Return from exploreDFS(0) — Complete!',
+      desc: 'No more neighbors in exploreDFS(0). Return. Call stack is now empty.\nAll 6 vertices reached from a single call to exploreDFS(0).',
+      nodes: allNodes('done'),
+      edges: edges({ '0-2': 'done', '1-2': 'done', '1-3': 'done', '1-4': 'done', '4-5': 'done', '2-3': 'back', '2-4': 'back' }),
+      stack: [], visited: [0, 2, 1, 3, 4, 5], visitOrder: [0, 2, 1, 3, 4, 5], algoLine: -1,
+      callout: { type: 'success', text: 'Visit order: 0 → 2 → 1 → 3 → 4 → 5\n\nBlue = DFS tree edges. Orange dashed = back edges (already-visited non-parent neighbors).' },
+    },
+  ];
+
+  // ─── Mode B: Source 3 (11 steps, index 0–10) ─────────────────────────────
+  const STEPS_B = [
+    // Step 0
+    {
+      title: 'Your Turn: exploreDFS from Source 3',
+      desc: 'Same graph, different starting vertex. Before stepping through, try to predict:\nIn what order will exploreDFS(3) visit the vertices?\n(Neighbors still explored in ascending order.)',
+      nodes: nodes({ 3: 'active' }),
+      edges: allEdges('normal'),
+      stack: [], visited: [], visitOrder: [], algoLine: -1,
+      callout: { type: 'info', text: 'All vertices reset to unvisited. Think first — then step through to check!' },
+      poll: {
+        question: 'Predict the visit order for exploreDFS(3). Which is correct?',
+        choices: [
+          ['A', '3, 2, 1, 0, 4, 5'],
+          ['B', '3, 1, 4, 2, 0, 5'],
+          ['C', '3, 1, 2, 0, 4, 5'],
+          ['D', '3, 2, 4, 5, 1, 0'],
+        ],
+      },
+    },
+    // Step 1
+    {
+      title: 'Call exploreDFS(3)',
+      desc: 'Mark vertex 3 as visited. Visit order: [ 3 ].',
+      nodes: nodes({ 3: 'active' }),
+      edges: allEdges('normal'),
+      stack: ['exploreDFS(3)'], visited: [3], visitOrder: [3], algoLine: 0, callout: null,
+    },
+    // Step 2
+    {
+      title: 'Neighbor 1: not visited → exploreDFS(1)',
+      desc: 'Neighbors of 3: [1, 2]. Check 1: not visited → call exploreDFS(1).\nMark 1 visited. Visit order: [ 3, 1 ].',
+      nodes: nodes({ 3: 'on-stack', 1: 'active' }),
+      edges: edges({ '1-3': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)'], visited: [3, 1], visitOrder: [3, 1], algoLine: 3, callout: null,
+    },
+    // Step 3
+    {
+      title: 'Neighbor 2: not visited → exploreDFS(2)',
+      desc: 'Neighbors of 1: [2, 3, 4]. Check 2: not visited → call exploreDFS(2).\nMark 2 visited. Visit order: [ 3, 1, 2 ].',
+      nodes: nodes({ 3: 'on-stack', 1: 'on-stack', 2: 'active' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)', 'exploreDFS(2)'], visited: [3, 1, 2], visitOrder: [3, 1, 2], algoLine: 3, callout: null,
+    },
+    // Step 4
+    {
+      title: 'Neighbor 0: not visited → exploreDFS(0)',
+      desc: 'Neighbors of 2: [0, 1, 3, 4]. Check 0: not visited → call exploreDFS(0).\nMark 0 visited. Visit order: [ 3, 1, 2, 0 ].',
+      nodes: nodes({ 3: 'on-stack', 1: 'on-stack', 2: 'on-stack', 0: 'active' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree', '0-2': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)', 'exploreDFS(2)', 'exploreDFS(0)'], visited: [3, 1, 2, 0], visitOrder: [3, 1, 2, 0], algoLine: 3, callout: null,
+    },
+    // Step 5
+    {
+      title: 'exploreDFS(0): neighbor 2 visited → return',
+      desc: 'Neighbors of 0: [2]. Check 2: visited (parent) → skip.\nReturn from exploreDFS(0). Backtrack to exploreDFS(2).',
+      nodes: nodes({ 3: 'on-stack', 1: 'on-stack', 2: 'on-stack', 0: 'done' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree', '0-2': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)', 'exploreDFS(2)'], visited: [3, 1, 2, 0], visitOrder: [3, 1, 2, 0], algoLine: 2,
+      callout: { type: 'success', text: 'Backtrack to exploreDFS(2). Continue scanning 2\'s remaining neighbors.' },
+      poll: {
+        question: 'We\'ve backtracked to exploreDFS(2). Unprocessed neighbors: [1, 3, 4]. Which vertex will be recursed into next?',
+        choices: [
+          ['A', 'Vertex 1 — call exploreDFS(1)'],
+          ['B', 'Vertex 3 — call exploreDFS(3)'],
+          ['C', 'Vertex 4 — call exploreDFS(4)'],
+          ['D', 'None — all neighbors already visited; return'],
+        ],
+      },
+    },
+    // Step 6
+    {
+      title: 'Back in exploreDFS(2): skip 1, 3; recurse into 4',
+      desc: 'Continue in exploreDFS(2): check 1→visited (parent, skip), 3→visited (back edge!), 4→not visited.\nCall exploreDFS(4). Mark 4. Visit order: [ 3, 1, 2, 0, 4 ].',
+      nodes: nodes({ 3: 'on-stack', 1: 'on-stack', 2: 'on-stack', 0: 'done', 4: 'active' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree', '0-2': 'tree', '2-3': 'back', '2-4': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)', 'exploreDFS(2)', 'exploreDFS(4)'], visited: [3, 1, 2, 0, 4], visitOrder: [3, 1, 2, 0, 4], algoLine: 3,
+      callout: { type: 'info', text: 'Edge 2→3: vertex 3 is visited but is 2\'s grandparent (not parent) — a back edge. 2\'s parent is 1.' },
+    },
+    // Step 7
+    {
+      title: 'exploreDFS(4): skip 1 (back edge!), 2; recurse into 5',
+      desc: 'Neighbors of 4: [1, 2, 5]. Check 1→visited (back edge — 1 is an ancestor), 2→visited (parent, skip).\nCheck 5: not visited → call exploreDFS(5). Mark 5. Visit order: [ 3, 1, 2, 0, 4, 5 ].',
+      nodes: nodes({ 3: 'on-stack', 1: 'on-stack', 2: 'on-stack', 0: 'done', 4: 'on-stack', 5: 'active' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree', '0-2': 'tree', '2-3': 'back', '2-4': 'tree', '1-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)', 'exploreDFS(2)', 'exploreDFS(4)', 'exploreDFS(5)'], visited: [3, 1, 2, 0, 4, 5], visitOrder: [3, 1, 2, 0, 4, 5], algoLine: 3,
+      callout: { type: 'info', text: 'Edge 4→1: vertex 1 is visited but not 4\'s parent — another back edge. Different source, different DFS tree!' },
+    },
+    // Step 8
+    {
+      title: 'Backtrack: return from exploreDFS(5), (4), (2)',
+      desc: 'exploreDFS(5): neighbor 4 visited → return.\nexploreDFS(4): no more neighbors → return.\nexploreDFS(2): no more neighbors → return. Three pops from call stack.',
+      nodes: nodes({ 3: 'on-stack', 1: 'on-stack', 0: 'done', 2: 'done', 4: 'done', 5: 'done' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree', '0-2': 'tree', '2-3': 'back', '2-4': 'tree', '1-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(3)', 'exploreDFS(1)'], visited: [3, 1, 2, 0, 4, 5], visitOrder: [3, 1, 2, 0, 4, 5], algoLine: -1, callout: null,
+    },
+    // Step 9
+    {
+      title: 'Back in exploreDFS(1): skip 3,4; return',
+      desc: 'Continue in exploreDFS(1). Check 3→visited (parent, skip). Check 4→visited (skip).\nNo more unvisited neighbors. Return from exploreDFS(1).',
+      nodes: nodes({ 3: 'on-stack', 0: 'done', 1: 'done', 2: 'done', 4: 'done', 5: 'done' }),
+      edges: edges({ '1-3': 'tree', '1-2': 'tree', '0-2': 'tree', '2-3': 'back', '2-4': 'tree', '1-4': 'back', '4-5': 'tree' }),
+      stack: ['exploreDFS(3)'], visited: [3, 1, 2, 0, 4, 5], visitOrder: [3, 1, 2, 0, 4, 5], algoLine: 2, callout: null,
+    },
+    // Step 10
+    {
+      title: 'Return from exploreDFS(3) — Complete!',
+      desc: 'Back in exploreDFS(3). Check 2→visited (skip).\nReturn from exploreDFS(3). Call stack empty. All 6 vertices visited!',
+      nodes: allNodes('done'),
+      edges: edges({ '1-3': 'done', '1-2': 'done', '0-2': 'done', '2-4': 'done', '4-5': 'done', '2-3': 'back', '1-4': 'back' }),
+      stack: [], visited: [3, 1, 2, 0, 4, 5], visitOrder: [3, 1, 2, 0, 4, 5], algoLine: -1,
+      callout: { type: 'success', text: 'Visit order: 3 → 1 → 2 → 0 → 4 → 5\n\nCompare with source 0 (0→2→1→3→4→5): different start → different DFS tree, different back edges!' },
+    },
+  ];
+
+  // ─── Mode C: Disconnected graph ──────────────────────────────────────────
+  // Edges removed in Mode C: 1-2, 1-4, 2-3. Remaining: 0-2, 1-3, 2-4, 4-5.
+  function edgesCC(overrides) {
+    return edges(Object.assign({ '1-2': 'removed', '1-4': 'removed', '2-3': 'removed' }, overrides || {}));
+  }
+
+  const STEPS_C = [
+    // Step 0 — intro
+    {
+      title: 'Disconnected Graph — DepthFirstSearch(G)',
+      desc: 'Three edges removed: (1,2), (1,4), (2,3).\nRemaining: (0,2), (1,3), (2,4), (4,5).\nAdjacency list:\n  0:[2]   1:[3]   2:[0,4]   3:[1]   4:[2,5]   5:[4]\nTwo disconnected components: {0,2,4,5} and {1,3}.',
+      nodes: allNodes('unvisited'),
+      edges: edgesCC({}),
+      stack: [], visited: [], visitOrder: [], algoLine: -1,
+      callout: { type: 'info', text: 'Question: if we call exploreDFS(0), can it reach vertices 1 and 3?\nStep through to find out — then see how DepthFirstSearch(G) handles disconnected graphs.' },
+      poll: {
+        question: 'We call exploreDFS(0) on this disconnected graph. Which vertices will be visited?',
+        choices: [
+          ['A', 'All 6 vertices: {0, 1, 2, 3, 4, 5}'],
+          ['B', 'Only {0, 2, 4, 5} — its connected component'],
+          ['C', 'Only {0, 2} — DFS follows one path and stops'],
+          ['D', 'Only {0} — DFS only marks the source'],
+        ],
+      },
+    },
+    // Step 1 — outer loop: v=0 → exploreDFS(0), mark 0
+    {
+      title: 'DepthFirstSearch(G): v=0 not visited → call exploreDFS(0)',
+      desc: 'Outer loop: v=0 is not visited → call exploreDFS(0).\nv.visited ← true: mark vertex 0 visited. Visit order: [ 0 ].',
+      nodes: nodes({ 0: 'active' }),
+      edges: edgesCC({}),
+      stack: ['DepthFirstSearch(G)', 'exploreDFS(0)'], visited: [0], visitOrder: [0], algoLine: 0,
+      callout: { type: 'info', text: 'The outer loop iterates all vertices. v=0: not visited → enters exploreDFS.' },
+    },
+    // Step 2 — exploreDFS(0): neighbor 2 → exploreDFS(2)
+    {
+      title: 'Neighbor 2: not visited → exploreDFS(2)',
+      desc: 'Neighbors of 0: [2]. Check 2: not visited → call exploreDFS(2).\nMark 2. Visit order: [ 0, 2 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'active' }),
+      edges: edgesCC({ '0-2': 'tree' }),
+      stack: ['DepthFirstSearch(G)', 'exploreDFS(0)', 'exploreDFS(2)'], visited: [0, 2], visitOrder: [0, 2], algoLine: 3,
+      callout: null,
+    },
+    // Step 3 — exploreDFS(2): skip 0, recurse into 4
+    {
+      title: 'Neighbor 4: not visited → exploreDFS(4)',
+      desc: 'Neighbors of 2: [0, 4]. Check 0: visited → skip.\nCheck 4: not visited → call exploreDFS(4). Mark 4. Visit order: [ 0, 2, 4 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 4: 'active' }),
+      edges: edgesCC({ '0-2': 'tree', '2-4': 'tree' }),
+      stack: ['DepthFirstSearch(G)', 'exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(4)'], visited: [0, 2, 4], visitOrder: [0, 2, 4], algoLine: 3,
+      callout: null,
+    },
+    // Step 4 — exploreDFS(4): skip 2, recurse into 5
+    {
+      title: 'Neighbor 5: not visited → exploreDFS(5)',
+      desc: 'Neighbors of 4: [2, 5]. Check 2: visited → skip.\nCheck 5: not visited → call exploreDFS(5). Mark 5. Visit order: [ 0, 2, 4, 5 ].',
+      nodes: nodes({ 0: 'on-stack', 2: 'on-stack', 4: 'on-stack', 5: 'active' }),
+      edges: edgesCC({ '0-2': 'tree', '2-4': 'tree', '4-5': 'tree' }),
+      stack: ['DepthFirstSearch(G)', 'exploreDFS(0)', 'exploreDFS(2)', 'exploreDFS(4)', 'exploreDFS(5)'], visited: [0, 2, 4, 5], visitOrder: [0, 2, 4, 5], algoLine: 3,
+      callout: null,
+    },
+    // Step 5 — KEY INSIGHT: backtrack complete, 1 and 3 unreached
+    {
+      title: 'exploreDFS(0) done — but vertices 1 and 3 are unreached!',
+      desc: 'exploreDFS(5): neighbor 4 visited → return.\nBacktrack: exploreDFS(4) → return. exploreDFS(2) → return. exploreDFS(0) → return.\nComponent {0,2,4,5} fully explored, but 1 and 3 were never visited.',
+      nodes: nodes({ 0: 'done', 2: 'done', 4: 'done', 5: 'done' }),
+      edges: edgesCC({ '0-2': 'done', '2-4': 'done', '4-5': 'done' }),
+      stack: ['DepthFirstSearch(G)'], visited: [0, 2, 4, 5], visitOrder: [0, 2, 4, 5], algoLine: 10,
+      callout: { type: 'warning', text: 'Vertices 1 and 3 are still unvisited!\nA standalone exploreDFS(0) call would stop here — missing the entire {1,3} component.\nThe outer loop in DepthFirstSearch(G) continues scanning...' },
+      poll: {
+        question: 'exploreDFS(0) finished but vertices 1 and 3 were never visited. What modification ensures ALL vertices are reached?',
+        choices: [
+          ['A', 'Re-run exploreDFS(0) with a larger stack limit'],
+          ['B', 'Add an outer loop: for each v, if not v.visited → exploreDFS(v)'],
+          ['C', 'Use BFS instead — DFS cannot handle disconnected graphs'],
+          ['D', 'Mark all vertices as visited before starting'],
+        ],
+      },
+    },
+    // Step 6 — reveal DepthFirstSearch(G) outer loop as the answer
+    {
+      title: 'The fix: DepthFirstSearch(G) wraps exploreDFS in an outer loop',
+      desc: 'DepthFirstSearch(G) iterates over every vertex in the graph.\nFor each vertex v: if v has not been visited yet, call exploreDFS(v).\nThis guarantees that every connected component gets explored — not just the one containing the start vertex.',
+      nodes: nodes({ 0: 'done', 2: 'done', 4: 'done', 5: 'done' }),
+      edges: edgesCC({ '0-2': 'done', '2-4': 'done', '4-5': 'done' }),
+      stack: ['DepthFirstSearch(G)'], visited: [0, 2, 4, 5], visitOrder: [0, 2, 4, 5], algoLine: 10,
+      callout: { type: 'info', text: 'The only difference from exploreDFS: an outer loop that checks every vertex.\nIf a vertex was already reached by a previous exploreDFS call, the visited check skips it — no duplicate work.' },
+    },
+    // Step 7 — outer loop: v=1 → exploreDFS(1)
+    {
+      title: 'Outer loop: v=1 not visited → call exploreDFS(1)',
+      desc: 'DepthFirstSearch(G) resumes outer loop. v=1: not visited → call exploreDFS(1).\nMark 1 visited. Visit order: [ 0, 2, 4, 5, 1 ].',
+      nodes: nodes({ 0: 'done', 2: 'done', 4: 'done', 5: 'done', 1: 'active' }),
+      edges: edgesCC({ '0-2': 'done', '2-4': 'done', '4-5': 'done' }),
+      stack: ['DepthFirstSearch(G)', 'exploreDFS(1)'], visited: [0, 2, 4, 5, 1], visitOrder: [0, 2, 4, 5, 1], algoLine: 0,
+      callout: null,
+    },
+    // Step 7 — exploreDFS(1): neighbor 3 → exploreDFS(3)
+    {
+      title: 'Neighbor 3: not visited → exploreDFS(3)',
+      desc: 'Neighbors of 1: [3]. Check 3: not visited → call exploreDFS(3).\nMark 3. Visit order: [ 0, 2, 4, 5, 1, 3 ].',
+      nodes: nodes({ 0: 'done', 2: 'done', 4: 'done', 5: 'done', 1: 'on-stack', 3: 'active' }),
+      edges: edgesCC({ '0-2': 'done', '2-4': 'done', '4-5': 'done', '1-3': 'tree' }),
+      stack: ['DepthFirstSearch(G)', 'exploreDFS(1)', 'exploreDFS(3)'], visited: [0, 2, 4, 5, 1, 3], visitOrder: [0, 2, 4, 5, 1, 3], algoLine: 3,
+      callout: null,
+    },
+    // Step 8 — complete
+    {
+      title: 'DepthFirstSearch(G) — Complete! Both components visited.',
+      desc: 'exploreDFS(3): neighbor 1 visited → return.\nexploreDFS(1): no more neighbors → return.\nOuter loop: v=2,3,4,5 all visited → skip. DepthFirstSearch(G) finishes.',
+      nodes: allNodes('done'),
+      edges: edgesCC({ '0-2': 'done', '2-4': 'done', '4-5': 'done', '1-3': 'done' }),
+      stack: [], visited: [0, 2, 4, 5, 1, 3], visitOrder: [0, 2, 4, 5, 1, 3], algoLine: -1,
+      callout: { type: 'success', text: 'All 6 vertices visited across two exploreDFS calls.\n\nComponent {0,2,4,5} → exploreDFS(0)\nComponent {1,3} → exploreDFS(1)\n\nThe outer loop is the key difference: exploreDFS handles one component; DepthFirstSearch(G) handles the whole graph.' },
+    },
+  ];
+
+  // ─── State ────────────────────────────────────────────────────────────────
+  let currentMode  = 'A';   // 'A' = source 0, 'B' = source 3, 'C' = disconnected
+  let currentStep  = 0;
+
+  function getSteps() {
+    if (currentMode === 'A') return STEPS_A;
+    if (currentMode === 'B') return STEPS_B;
+    return STEPS_C;
+  }
+  function totalSteps() { return getSteps().length; }
+
+  // ─── DOM refs ─────────────────────────────────────────────────────────────
+  const progressBar       = document.getElementById('progress-bar-inner');
+  const stepTitle         = document.getElementById('step-title');
+  const stepDesc          = document.getElementById('step-desc');
+  const calloutRow        = document.getElementById('callout-row');
+  const calloutBox        = document.getElementById('callout-box');
+  const headerStepCounter = document.getElementById('header-step-counter');
+  const stepCounter       = document.getElementById('step-counter');
+  const btnPrev           = document.getElementById('btn-prev');
+  const btnNext           = document.getElementById('btn-next');
+  const callStackBody     = document.getElementById('call-stack-body');
+  const visitedSetDisplay = document.getElementById('visited-set-display');
+  const visitOrderDisplay = document.getElementById('visit-order-display');
+  const btnMode0          = document.getElementById('btn-mode-0');
+  const btnMode3          = document.getElementById('btn-mode-3');
+  const btnModeCC         = document.getElementById('btn-mode-cc');
+  const algoOuterSection  = document.getElementById('algo-outer-section');
+  const pollRow           = document.getElementById('poll-row');
+  const pollQuestionText  = document.getElementById('poll-question-text');
+  const pollChoicesList   = document.getElementById('poll-choices-list');
+
+  // ─── Apply step ───────────────────────────────────────────────────────────
+  function applyStep(idx) {
+    const steps = getSteps();
+    const s = steps[idx];
+    const total = totalSteps();
+
+    // Progress bar
+    const pct = total > 1 ? (idx / (total - 1)) * 100 : 0;
+    progressBar.style.width = pct + '%';
+
+    // Title / description
+    stepTitle.textContent = s.title;
+    stepDesc.textContent  = s.desc;
+
+    // Callout
+    if (s.callout) {
+      calloutBox.textContent = s.callout.text;
+      calloutBox.className   = s.callout.type;
+      calloutRow.style.display = 'block';
+    } else {
+      calloutBox.className     = '';
+      calloutRow.style.display = 'none';
+    }
+
+    // Poll question
+    if (s.poll) {
+      pollQuestionText.textContent = s.poll.question;
+      pollChoicesList.innerHTML = s.poll.choices.map(function (c) {
+        return '<div class="poll-choice"><span class="poll-choice-key">' +
+          escHtml(c[0]) + ')</span><span>' + escHtml(c[1]) + '</span></div>';
+      }).join('');
+      pollRow.style.display = 'block';
+    } else {
+      pollRow.style.display = 'none';
+    }
+
+    // Step counters
+    const last = total - 1;
+    const counterText = 'step ' + idx + ' of ' + last;
+    stepCounter.textContent       = counterText;
+    headerStepCounter.textContent = counterText;
+
+    // Buttons
+    btnPrev.disabled = idx === 0;
+    btnNext.disabled = idx === last;
+
+    // SVG
+    applyNodeStates(s.nodes);
+    applyEdgeStates(s.edges);
+
+    // Algorithm highlight
+    applyAlgoHighlight(s.algoLine);
+
+    // Side panels
+    renderCallStack(s.stack);
+    renderVisited(s.visited, s.visitOrder);
+  }
+
+  function applyNodeStates(nodeMap) {
+    ALL_NODES.forEach(n => {
+      const state = nodeMap[n] || 'unvisited';
+      const style = NODE_STYLES[state] || NODE_STYLES['unvisited'];
+      const circle = document.getElementById('node-' + n);
+      const label  = document.getElementById('node-label-' + n);
+      if (!circle) return;
+      circle.style.fill        = style.fill;
+      circle.style.stroke      = style.stroke;
+      circle.style.strokeWidth = style.strokeWidth;
+      if (label) label.style.fill = style.textColor;
+    });
+  }
+
+  function applyEdgeStates(edgeMap) {
+    ALL_EDGES.forEach(key => {
+      const state = edgeMap[key] || 'normal';
+      const style = EDGE_STYLES[state] || EDGE_STYLES['normal'];
+      const el = document.getElementById('edge-' + key);
+      if (!el) return;
+      el.setAttribute('stroke', style.stroke);
+      el.setAttribute('stroke-width', style.strokeWidth);
+      if (style.dasharray) {
+        el.setAttribute('stroke-dasharray', style.dasharray);
+      } else {
+        el.removeAttribute('stroke-dasharray');
+      }
+    });
+  }
+
+  function applyAlgoHighlight(lineIdx) {
+    [0, 1, 2, 3, 10, 11, 12].forEach(function (i) {
+      const el = document.getElementById('algo-line-' + i);
+      if (!el) return;
+      el.classList.toggle('highlighted', i === lineIdx);
+    });
+  }
+
+  function renderCallStack(stack) {
+    if (!stack || stack.length === 0) {
+      callStackBody.innerHTML = '<div class="empty-hint">(empty)</div>';
+      return;
+    }
+    callStackBody.innerHTML = stack.map(function (item, i) {
+      const top = i === stack.length - 1;
+      return '<div class="stack-item' + (top ? ' top-of-stack' : '') + '">' + escHtml(item) + '</div>';
+    }).join('');
+    callStackBody.scrollTop = callStackBody.scrollHeight;
+  }
+
+  function renderVisited(visited, visitOrder) {
+    // Visited set: insertion order = visitOrder order, displayed as { 0, 2, 1 }
+    if (!visited || visited.length === 0) {
+      visitedSetDisplay.textContent = '(empty)';
+    } else {
+      visitedSetDisplay.textContent = '{ ' + visited.join(', ') + ' }';
+    }
+
+    // Visit order: 0 → 2 → 1
+    if (!visitOrder || visitOrder.length === 0) {
+      visitOrderDisplay.textContent = '(none)';
+    } else {
+      visitOrderDisplay.textContent = visitOrder.join(' \u2192 ');
+    }
+  }
+
+  function escHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ─── Navigation ───────────────────────────────────────────────────────────
+  function goTo(idx) {
+    const steps = getSteps();
+    if (idx < 0 || idx >= steps.length) return;
+    currentStep = idx;
+    applyStep(currentStep);
+  }
+
+  function switchMode(mode) {
+    currentMode = mode;
+    currentStep = 0;
+    btnMode0.classList.toggle('active', mode === 'A');
+    btnMode3.classList.toggle('active', mode === 'B');
+    btnModeCC.classList.toggle('active', mode === 'C');
+    algoOuterSection.style.display = mode === 'C' ? '' : 'none';
+    applyStep(0);
+  }
+
+  btnPrev.addEventListener('click', function () { goTo(currentStep - 1); });
+  btnNext.addEventListener('click', function () { goTo(currentStep + 1); });
+
+  btnMode0.addEventListener('click', function () { if (currentMode !== 'A') switchMode('A'); });
+  btnMode3.addEventListener('click', function () { if (currentMode !== 'B') switchMode('B'); });
+  btnModeCC.addEventListener('click', function () { if (currentMode !== 'C') switchMode('C'); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(currentStep - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(currentStep + 1); }
+  });
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  applyStep(0);
+})();
+</script>
+</body>
+</html>
