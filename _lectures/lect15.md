@@ -44,6 +44,9 @@ These videos answer those questions, visually and without heavy math:
 - [3Blue1Brown — Gradient descent, how neural networks learn](https://youtu.be/IHZwWFHWa-w?si=_e4wkFW624ari842) (20 min)
 - [3Blue1Brown — Backpropagation, intuitively](https://youtu.be/Ilg3gGewQ5U?si=ANRSwDucsfT5BFbN) (20 min)
 
+To see a real neural network train live in your browser — adjusting weights, watching the decision boundary shift, experimenting with architecture and learning rate:
+- [TensorFlow Playground](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.23990&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false){:target="_blank"}
+
 
 
 
