@@ -9,20 +9,27 @@ pdfurl: /lectures/CS24_Graph_DFT.pdf
 
 
 
-# Topics
+# Lecture Plan
 
-* DFS with applications to leetcode problems
-* Leetcode problem: https://leetcode.com/problems/keys-and-rooms/description/
+### 1. DFS Visualizer
 
-# Visualizers
-
-**Goal:** Step through the DFS algorithm on a small graph — trace the call stack, see how backtracking works, and understand why a single call to `exploreDFS(v)` is not enough for a disconnected graph. The third mode shows the outer loop in `DepthFirstSearch(G)` that handles disconnected components.
+Step through the DFS algorithm on a small graph — trace the call stack, see how backtracking works, and understand why a single call to `exploreDFS(v)` is not enough for a disconnected graph. The third mode shows the outer loop in `DepthFirstSearch(G)` that handles disconnected components.
 
 [Interactive DFS Visualizer]({{site.baseurl}}/assets/dfs_viz.html){:target="_blank"}
 
 ---
 
-**Goal:** See DFS applied to a real problem you are implementing in PA03. The neural network is a directed graph where edges only go forward. To compute the nudge (delta) for each weight, you need values from nodes in the next layer — but there is no backward edge to follow. The recursive DFS naturally solves this: dive to the output first, compute the error there, then pass results back up the call stack. A contributions map (memoization) ensures each node is computed only once.
+### 2. LeetCode Problem: Keys and Rooms
+
+Apply DFS to a new graph problem. Given the DFS pattern from the visualizer, identify what the graph is, what the visited set tracks, and how to detect whether all rooms are reachable.
+
+[Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/description/){:target="_blank"}
+
+---
+
+### 3. DFS Applied to PA03: Backpropagation
+
+The neural network is a directed graph where edges only go forward. To compute the nudge (delta) for each weight, you need values from nodes in the next layer — but there is no backward edge to follow. The recursive DFS naturally solves this: dive to the output first, compute the error there, then pass results back up the call stack. A contributions map (memoization) ensures each node is computed only once.
 
 [Interactive Backpropagation Visualizer (PA03)]({{site.baseurl}}/assets/backprop_viz.html){:target="_blank"}
 
