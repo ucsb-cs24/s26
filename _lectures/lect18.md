@@ -1,9 +1,11 @@
 ---
-num: "final"
-lecture_date: 2026-03-19
-desc: "Final Exam Instructions and Study Tips"
+num: "lect18"
+sequence: 18
+lecture_date: 2026-03-11
+desc: "Final Review"
 ready: false
 ---
+
 ## Final Exam Logistics
 - Time and location: noon - 3p on Thursday 2026-03-19
 - Seating will be assigned, link will appear here and on Ed
@@ -16,13 +18,13 @@ Begin with lp05 (graph search) and work your way back to lp01 (linked lists).
 
     - Try to solve each problem within ~20 minutes.
 
-    - If a problem is tricky or taking too long (e.g., >1 hour), skip it for now and circle back later. Don’t get stuck in a time sink.
+    - If a problem is tricky or taking too long (e.g., >1 hour), skip it for now and circle back later. Don't get stuck in a time sink.
 
 2. After solving a few problems in each problem set, review lectures materials
 Go back to the slides, handouts, and code that relate to the topic you just practiced.
 You should again focus on solving the problems discussed in class and in handouts yourself, and refering to annotations only when you get stuck. Use the pre-lecture slides/handouts first for problem solving practice, post lecture annotated slides and code to check how I solved  problem. Be curious about any differences in approach.
 
-3. Use recorded lecture videos strategically: If you need a refresher, review relevant sections of the recorded lectures on that topic. Ask questions on office hours or on Ed. I expect you have a thorough understanding of all material covered in lectures. 
+3. Use recorded lecture videos strategically: If you need a refresher, review relevant sections of the recorded lectures on that topic. Ask questions on office hours or on Ed. I expect you have a thorough understanding of all material covered in lectures.
 
     - Focus especially on:
 
@@ -33,7 +35,7 @@ You should again focus on solving the problems discussed in class and in handout
     - Code patterns and key implementation details
 
 4. Use Your Labs and Projects Strategically
-Each lab/project reinforces real-world applications of core data structures and how to work with the C++ STL. Here’s what to do:
+Each lab/project reinforces real-world applications of core data structures and how to work with the C++ STL. Here's what to do:
 
     Skim your submissions (labs and PAs) and remind yourself:
 

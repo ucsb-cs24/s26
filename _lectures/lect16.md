@@ -1,6 +1,7 @@
 ---
 num: "lect16"
 sequence: 16
+lecture_date: 2026-03-04
 desc: "Mergesort: Divide and Conquer"
 ready: false
 pre-reading: "Savitch: 13.1 - 13.2"
