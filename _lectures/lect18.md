@@ -1,7 +1,6 @@
 ---
 num: "lect18"
 sequence: 18
-lecture_date: 2026-03-11
 desc: "Final Review"
 ready: false
 ---

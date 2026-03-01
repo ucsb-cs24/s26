@@ -1,7 +1,6 @@
 ---
 num: "lect17"
 sequence: 17
-lecture_date: 2026-03-09
 desc: "Complexity Analysis Revisited: Graph Search and Sorting"
 ready: false
 pdfurl: /lectures/CS24_PQ_GraphSearchComplexity.pdf
