@@ -25,6 +25,13 @@ Apply DFS to a new graph problem. Given the DFS pattern from the visualizer, ide
 
 [Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/description/){:target="_blank"}
 
+Input:  vector<vector<int>> rooms = [[1],[2, 3],[1],[]]
+Output: ?
+
+Discuss with your peer (5 mins):
+1. What are the nodes and what are the edges in this problem?                                                                                                 
+2. What does the input (rooms) represent in graph terms?  
+  
 ---
 
 ### 3. DFS Applied to PA03: Backpropagation
