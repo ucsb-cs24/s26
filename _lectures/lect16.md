@@ -17,7 +17,7 @@ handouturl: https://bit.ly/Divide-and-Conquer-Practice
 # Topics
 * Divide and Conquer Algorithms
  - Subdivide a larger problem into smaller problems
- - Solve each smaller part
+ - Solve each subproblem
  - Combine solutions of smaller sub problems back into the larger problem
 
 * Mergesort as an example of efficient sorting algo that uses the divide and conquer approach and runs in O(n log n)
