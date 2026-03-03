@@ -6,6 +6,8 @@ ready: true
 pre-reading: "Savitch: 15.1 - 15.2"
 pdfurl: /lectures/CS24_Graph_Representation.pdf
 handouturl: https://bit.ly/NeuralNets-GraphRepresentation
+annotatedready: true
+annotatedpdfurl:  /lectures/CS24_Graph_Representation_ann.pdf
 ---
 
 # Code from lecture

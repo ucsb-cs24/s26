@@ -5,6 +5,8 @@ desc: "Priority Queue and Hashtable Practice (QUIZ 3)"
 ready: true
 pre-reading: ""
 pdfurl: /lectures/CS24_PQ_HT_Practice.pdf
+annotatedready: true
+annotatedpdfurl: /lectures/CS24_PQ_HT_Practice_ann.pdf
 ---
 
 # Code from lecture
