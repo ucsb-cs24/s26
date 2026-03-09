@@ -1,9 +1,9 @@
 ---
 num: "lect17"
 sequence: 17
-desc: "Complexity Analysis Revisited: Graph Search and Sorting"
-ready: false
-pdfurl: /lectures/CS24_PQ_GraphSearchComplexity.pdf
+desc: "Complexity Analysis Revisited: Graph Search and std::set"
+ready: true
+pdfurl: /lectures/CS24_CompexityAnalysisRevisited.pdf
 ---
 
 ## Topics
