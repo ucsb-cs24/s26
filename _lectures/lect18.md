@@ -4,6 +4,7 @@ sequence: 18
 desc: "Final Review"
 ready: true
 pdfurl: /lectures/CS24_FinalPractice.pdf
+annotatedpdfurl: /lectures/CS24_FinalPractice_ann.pdf
 handouturl: https://bit.ly/one-problem-to-rule-them-all
 ---
 
