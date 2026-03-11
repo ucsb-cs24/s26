@@ -2,7 +2,9 @@
 num: "lect18"
 sequence: 18
 desc: "Final Review"
-ready: false
+ready: true
+pdfurl: /lectures/CS24_FinalPractice.pdf
+handouturl: https://bit.ly/one-problem-to-rule-them-all
 ---
 
 ## Final Exam Logistics
@@ -18,6 +20,8 @@ Begin with lp05 (graph search) and work your way back to lp01 (linked lists).
     - Try to solve each problem within ~20 minutes.
 
     - If a problem is tricky or taking too long (e.g., >1 hour), skip it for now and circle back later. Don't get stuck in a time sink.
+
+    - Try solving at least a few problems in as many ways as you can (that gives you good coverage of multiple data structures)
 
 2. After solving a few problems in each problem set, review lectures materials
 Go back to the slides, handouts, and code that relate to the topic you just practiced.
@@ -48,13 +52,13 @@ Each lab/project reinforces real-world applications of core data structures and 
 
     * lab02/lab03 for Linked Lists and BSTs
 
-    * lab05 for Heaps
+    * lab04 for Heaps
 
     * pa01 for applying BSTs in a game
 
     * pa02 and pa03 for applied, multi-structure problem-solving
 
-    * lab04 and lab06 for complexity analysis
+    * lab02 and lab05 for complexity analysis
 
 5. Consolidate Key Concepts
 Make a quick personal reference sheet (or flashcards) for:
@@ -68,7 +72,7 @@ Make a quick personal reference sheet (or flashcards) for:
 * Hash table behaviors, collisions, and performance
 
 6. Simulate Exam Conditions
-Time yourself doing a few past practice exams available on Canvas or sample exercises without any notes.
+Time yourself doing a the final exam from last year available on Canvas or sample exercises without any notes.
 
 Aim for clean, bug-free code in one go.
 
