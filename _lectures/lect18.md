@@ -12,7 +12,7 @@ handouturl: https://bit.ly/one-problem-to-rule-them-all
 ## Final Exam Logistics
 - Time and location: noon - 3p on Thursday 2026-03-19
 - Seating is assigned. Please check your seat number here: <https://docs.google.com/spreadsheets/d/1P09jGAu2DY8lQTx8G2mir540VoHInvfDD9YmBFbyaSo/edit?usp=sharing>
-- To locate your seta, please see the room layout: <https://docs.google.com/spreadsheets/d/1P09jGAu2DY8lQTx8G2mir540VoHInvfDD9YmBFbyaSo/edit?gid=1975279746#gid=1975279746>
+- To locate your seat, please see the room layout: <https://docs.google.com/spreadsheets/d/1P09jGAu2DY8lQTx8G2mir540VoHInvfDD9YmBFbyaSo/edit?gid=1975279746#gid=1975279746>
 - Closed book closed notes.
 
 ## Tips for studying for the final exam
