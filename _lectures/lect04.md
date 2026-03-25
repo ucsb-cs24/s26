@@ -1,11 +1,11 @@
 ---
 num: "lect04"
 sequence: 4
-desc: "Efficient search with Binary Search Trees(QUIZ 1)"
-ready: true
+desc: "Quiz 1 + Efficient search with Binary Search Trees"
+ready: false
 pre-reading: "Savitch: 12.1, 10.1 - 10.3"
 pdfurl: /lectures/CS24_BST_part1.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_BST_part1_ann.pdf
 ---
 # Code from lecture

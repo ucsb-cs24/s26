@@ -2,12 +2,13 @@
 num: "lect05"
 sequence: 5
 desc: "BST operations and Tree traversals"
-ready: true
+ready: false
 pre-reading: "Savitch: 10.4, 10.5"
 pdfurl: /lectures/CS24_BST_part2.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_BST_part2_ann.pdf
 handouturl: https://docs.google.com/document/d/1LZnQXepO3PHp-ncyidrDgoHqrwUZrBzatFCDLlT_cxo/edit?tab=t.0#heading=h.74bek3gewyr8
+handoutready: false
 ---
 
 # Code from lecture

@@ -1,11 +1,11 @@
 ---
 num: "lect14"
 sequence: 14
-desc: "Graph search: Breadth first traversal (Quiz 4)"
-ready: true
+desc: "Graph search: Breadth first traversal"
+ready: false
 pre-reading: "Savitch: 15.3"
 pdfurl: /lectures/CS24_Graph_BFT.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl:  /lectures/CS24_Graph_BFT_ann.pdf
 ---
 

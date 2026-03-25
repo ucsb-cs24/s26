@@ -63,4 +63,4 @@ Welcome to CS24! The goal of this class is to solve problems efficiently using d
 
 ---
 
-[CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/), Diba Mirza, Winter 2026.
+[CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/), Diba Mirza, Spring 2026.

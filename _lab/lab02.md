@@ -1,12 +1,12 @@
 ---
+
 layout: lab
 num: lab02
-ready: true
+ready: false
 desc: "Complexity Analysis - Part 1"
-assigned: 2026-01-16 09:00:00.00-08:00
-due: 2026-01-23 23:59:00.00-08:00
+assigned: 2026-04-10 09:00:00.00-08:00
+due: 2026-04-17 23:59:00.00-08:00
 ---
-
 
 ## Collaboration policy
 This lab must be done individually.

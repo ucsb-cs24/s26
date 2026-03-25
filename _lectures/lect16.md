@@ -2,12 +2,13 @@
 num: "lect16"
 sequence: 16
 desc: "Mergesort: Divide and Conquer"
-ready: true
+ready: false
 pre-reading: "Savitch: 13.1 - 13.2"
 pdfurl: /lectures/CS24_MergeSort.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_MergeSort_ann.pdf
 handouturl: https://bit.ly/Divide-and-Conquer-Practice
+handoutready: false
 ---
 
 # Code from lecture

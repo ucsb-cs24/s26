@@ -5,9 +5,10 @@ desc: "CS16 Review: Abstract Data Types (Linked List)"
 pre-reading: "Savitch: 2.1 - 2.5, 3.1"
 ready: true
 pdfurl: /lectures/CS24_Lecture1.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_Lecture1_ann.pdf
 handouturl: https://docs.google.com/document/d/1HaLP88rtE3i6-YwHpOntyRExiFMhbHGJx9on6CHw3Ks/edit?usp=sharing
+handoutready: false
 ---
 # Code from lecture
 

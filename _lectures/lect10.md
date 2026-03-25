@@ -2,12 +2,13 @@
 num: "lect10"
 sequence: 10
 desc: "Binary Heaps and Priority Queues"
-ready: true
+ready: false
 pre-reading: "Savitch: 11.1 - 11.2"
 pdfurl: /lectures/CS24_BinaryHeap.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_BinaryHeap_ann.pdf
 handouturl: https://bit.ly/CS24-binaryheap
+handoutready: false
 ---
 
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})

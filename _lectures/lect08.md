@@ -2,12 +2,13 @@
 num: "lect08"
 sequence: 8
 desc: "Stacks"
-ready: true
+ready: false
 pre-reading: "Savitch: 7.1 - 7.4"
 pdfurl: /lectures/CS24_Stacks.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_Stacks_ann.pdf
 handouturl: https://docs.google.com/document/d/1IZU9fwohU5ch91f2pMRpK04oym-sAF4WZrV6-HRUl-s/edit?usp=sharing
+handoutready: false
 ---
 # Code from lecture
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})

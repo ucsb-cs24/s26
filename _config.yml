@@ -3,53 +3,52 @@ plugins:
   - jekyll-include-cache
 
 # Lecture schedule configuration
-lect_repo: https://github.com/ucsb-cs24-w26/cs24-w26-lectures
+lect_repo: https://github.com/ucsb-cs24-s26/cs24-s26-lectures
 start_week: 1
-start_date: 2026-01-05  # First day of instruction
+start_date: 2026-03-30        # First day of instruction
+dates_based_on: 2026-03-30   # Assignment dates currently use this quarter's start; updated by sync_dates.rb
 num_weeks: 10
 extra_exam_week: true
 lecture_days: [1, 3]  # 1=Monday, 3=Wednesday (use [2, 4] for Tue/Thu)
 holidays:
-  - date: "2026-01-19"
-    desc: "MLK Day"
-  - date: "2026-02-16"
-    desc: "Presidents Day"
+  - date: "2026-05-25"
+    desc: "Memorial Day"
 
 remote_theme: ucsb-cs-course-repos/course-repo-jekyll-theme
 #remote_theme: pmarsceill/just-the-docs@v0.3.3
-url: https://ucsb-cs24.github.io/w26
-baseurl: "/w26"
+url: https://ucsb-cs24.github.io/s26
+baseurl: "/s26"
 instructor: "Diba Mirza"
-name: "CS24 Winter 2026"
+name: "CS24 Spring 2026"
 course: "CS24"
 course_title: "Problem Solving with Computers II"
-title: "UCSB CS24 W26"
-github_url: https://github.com/ucsb-cs24/w26
-qtr: "W26"
-quarter: "Winter 2026"
-lecture_times: "MW 11:00a - 12:15p"
-lecture_location: "BUCHN 1910"
-office_hours: "WR: 1p - 2p, HFH 2119"
-lab_times: "R: 11a - noon , noon - 1p, 1p - 2p , 2p - 3p, 3p - 4p" 
-tas: "Sarah Canto Hyatt, Yupeng Su, Zhuoer Shen, Towhidul Islam"
-ulas: "Nikhil Kapasi, Olivia Chen, Kyle Manternach, Ritam Saha,  Samuel Zhang, Jackson Cao"
+title: "UCSB CS24 s26"
+github_url: https://github.com/ucsb-cs24/s26
+qtr: "s26"
+quarter: "Spring 2026"
+lecture_times: "MW 12:30a - 1:45p"
+lecture_location: "EMBARHALL"
+office_hours: "T: noon - 1p, R: 11a - noon, HFH 2119"
+lab_times: "R: 10a - 10:50a , 1p - 1:50p , 2p - 2:50p, Phelps 3525" 
+tas: "Sarah Canto Hyatt and Guanyu Yao"
+ulas: "Nikhil Kapasi, Olivia Chen, Christian Kantchev"
 class_org:
-   name: ucsb-cs24-w26
-   url: https://github.com/ucsb-cs24-w26
-   githublinker: CS24 W26
+   name: ucsb-cs24-s26
+   url: https://github.com/ucsb-cs24-s26
+   githublinker: CS24 s26
 
 
 instructor_url: https://ucsb-cs24.github.io/instructor
 
 cal_dates: >
   [
-  {"label":"First day of classes", "date":"2026-01-05" },
-  {"label":"Drop deadline (no W grade)","date":"2026-01-23" },
-  {"label":"Martin Luther King Day - No lecture", "date":"2026-01-19" },
+  {"label":"First day of classes", "date":"2026-03-30" },
+  {"label":"Drop deadline (no W grade)","date":"2026-04-24" },
+  {"label":"Memorial Day - No lecture", "date":"2026-05-25" },
   {"label":"Presidents Day - No lecture", "date":"2026-02-16" },
-  {"label":"W26 Instruction Ends", "date":"2026-03-13" },
-  {"label":"Final Exam", "date":"2026-03-18" },
-  {"label":"W26 Quarter Ends", "date":"2026-03-20" }
+  {"label":"s26 Instruction Ends", "date":"2026-06-05" },
+  {"label":"Final Exam", "date":"2026-06-09" },
+  {"label":"s26 Quarter Ends", "date":"2026-03-20" }
   ]
 
 kramdown:

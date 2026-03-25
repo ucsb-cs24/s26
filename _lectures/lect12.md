@@ -1,11 +1,11 @@
 ---
 num: "lect12"
 sequence: 12
-desc: "Priority Queue and Hashtable Practice (QUIZ 3)"
-ready: true
+desc: "Quiz 3 + Priority Queue and Hashtable Practice"
+ready: false
 pre-reading: ""
 pdfurl: /lectures/CS24_PQ_HT_Practice.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_PQ_HT_Practice_ann.pdf
 ---
 

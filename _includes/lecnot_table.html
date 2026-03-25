@@ -26,7 +26,7 @@
   <td class="lect_num"><time datetime="{{display_date}}">{{display_date}}</time></td>
   <td class="lect_num"><a href="{{lect.url | relative_url }}" data-ajax="false" aria-label="Lecture {{ lect.num }}">{{ lect.num }}</a></td>
   <!-- <td class="lect_ready">{{lect.ready}}</td> -->
-  <td class="lect_desc">{{lect.desc }}{% if lect.ready%}&nbsp;(<a href="{{lect.pdfurl|relative_url}}" aria-label="Download slides for {{ lect.num }}">slides</a>){% endif%}{% if lect.annotatedready %}&nbsp;(<a href="{{lect.annotatedpdfurl|relative_url}}" aria-label="Download annotated slides for {{ lect.num }}">annotated slides</a>){% endif%}{% if lect.handouturl %}&nbsp;(<a href="{{lect.handouturl}}" target="_blank" rel="noopener noreferrer" aria-label="Open handout for {{ lect.num }}">handout</a>){% endif%}</td>
+  <td class="lect_desc">{{lect.desc }}{% if lect.ready%}&nbsp;(<a href="{{lect.pdfurl|relative_url}}" aria-label="Download slides for {{ lect.num }}">slides</a>){% endif%}{% if lect.annotatedready %}&nbsp;(<a href="{{lect.annotatedpdfurl|relative_url}}" aria-label="Download annotated slides for {{ lect.num }}">annotated slides</a>){% endif%}{% if lect.handouturl and lect.handoutready %}&nbsp;(<a href="{{lect.handouturl}}" target="_blank" rel="noopener noreferrer" aria-label="Open handout for {{ lect.num }}">handout</a>){% endif%}</td>
   <td class="pre-reading">
     {% assign reading = lect["pre-reading"] %}
     {% assign reading = reading | replace: "OP:", "<a href='https://opendatastructures.org/ods-cpp/' target='_blank'>OP</a>:" %}

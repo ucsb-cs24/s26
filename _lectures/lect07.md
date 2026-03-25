@@ -1,13 +1,14 @@
 ---
 num: "lect07"
 sequence: 7
-desc: "BST and Big O review (QUIZ 2)"
-ready: true
+desc: "Quiz 2 + BST and Big O review"
+ready: false
 pre-reading: "Savitch: 1.2"
 pdfurl: /lectures/CS24_Lect07_Handout.pdf
-annotatedready: true
+annotatedready: false
 annotatedpdfurl: /lectures/CS24_Lect07_Handout_ann.pdf
 handouturl: https://docs.google.com/document/d/14HdKnR8MlSc_W2oCXoDsc6bM22DZIusPrfZR9ACTDNU/edit?usp=sharing
+handoutready: false
 ---
 # Code from lecture
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
