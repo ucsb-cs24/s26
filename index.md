@@ -29,6 +29,27 @@ Welcome to CS24! The goal of this class is to solve problems efficiently using d
 
 ---
 
+### Required Textbooks
+
+<table>
+  <tbody>
+    <tr>
+      <td style="padding-right:2em"><strong>Savitch</strong></td>
+      <td style="padding-right:2em"><em>Data Structures and Other Objects Using C++</em> by Main &amp; Savitch</td>
+      <td>Primary textbook (also used in CS32)</td>
+    </tr>
+    <tr>
+      <td style="padding-right:2em"><strong>OP</strong></td>
+      <td style="padding-right:2em"><a href="https://opendatastructures.org/"><em>Open Data Structures</em></a> by Morin</td>
+      <td>Free online; used for complexity and algorithmic topics</td>
+    </tr>
+  </tbody>
+</table>
+
+Pre-reading assignments in the lecture schedule use these shortforms (e.g., "Savitch: 10.1–10.3" or "OP: 1.3").
+
+---
+
 ### Lectures
 
 <div class="card card-body" id="lectures" markdown="1">
