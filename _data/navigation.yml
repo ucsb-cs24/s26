@@ -46,7 +46,7 @@ offering_links:
     url: /info/mock_interview/
     description: "Mock Interview Guide"
   - title: Ed
-    url: https://edstem.org/us/courses/90411/discussion
+    url:  https://edstem.org/us/courses/97113/discussion
     description: "Q&A Forum"
   - title: Github
     dropdown:
