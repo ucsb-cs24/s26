@@ -14,7 +14,7 @@ Mock interviews are worth **10% of your course grade** and provide an opportunit
 - **By end of Week 2**: Submit booking preferences form (link will be posted on course website)
 - **Weeks 5-10**: Complete your scheduled 20-minute mock interview
 
-**Important:** Book early! Slots fill up quickly with 200+ students. No make-ups without prior arrangement. Missing your scheduled interview = 0%.
+**Important:** Book early! Slots fill up quickly. No make-ups without prior arrangement. Missing your scheduled interview = 0%.
 
 ---
 
