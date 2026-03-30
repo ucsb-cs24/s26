@@ -36,7 +36,7 @@ By the end of this course, students will be able to:
 
 **Support:** Instructor office hours (see website), TA/ULA drop-in hours (Phelps 3525, times on course calendar).
 
-**In-Class Participation:** Join [iClicker Cloud](https://join.iclicker.com/ZHLY). Participation is ungraded but encouraged.
+**In-Class Participation:** Join the course on [iClicker Cloud]({{site.iclicker_join_link}}). Participation is ungraded but encouraged.
 
 ### Discussion Forum: Ed
 Use Ed for Q&A (link on Canvas). Post public questions when applicable; for coding issues:
@@ -44,7 +44,7 @@ Use Ed for Q&A (link on Canvas). Post public questions when applicable; for codi
 - Make posts private if including significant code.
 
 ### Grading
-- **Quizzes**: 20% (4 quizzes during lecture, up to two lowerst quiz score replaced by final exam score if higher)
+- **Quizzes**: 20% (4 quizzes during lecture, lowest quiz score replaced by final exam score if final score is higher)
 - **Programming Assignments**: 25% (labs + larger projects)
 - **LeetCode Practice**: 10% (preparation for quizzes and mock interview)
 - **Mock Interview**: 10%
@@ -58,7 +58,7 @@ Quizzes are given during lecture to help you stay on track and assess your under
 - **Format**: 15-20 minutes, given at the beginning or end of lecture
 - **Coverage**: Material from the previous 2-3 weeks
 - **Grading**: Each quiz is worth 5%. 
-- **Make-ups**: No make-ups for missed quizzes; use the provision of final exam replacing up to two lowest quiz scores
+- **Make-ups**: No make-ups for missed quizzes; use the provision of final exam replacing the lowest quiz scores
 - **Content**: Mix of conceptual questions, code reading, and short coding problems
 
 ### LeetCode Practice (10%)
@@ -97,7 +97,7 @@ Complete one 20-minute mock technical interview with a TA or ULA to demonstrate 
 **Important:**
 - Book early! Slots fill up quickly with 200+ students
 - No make-ups without prior arrangement. Missing your interview = 0%
-- See [detailed guide and grading rubric](/w26/info/mock_interview/) for complete information
+- See [detailed guide and grading rubric]({{site.baseurl}}/info/mock_interview/) for complete information
 
 ### Late Policy
 You have **five late days** total, with a **maximum of three days** per assignment, no penalty within this limit. Beyond this, instructor approval is needed and extensions may be given only for extenuating circumstances with documentation.

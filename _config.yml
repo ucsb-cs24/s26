@@ -24,6 +24,7 @@ course: "CS24"
 course_title: "Problem Solving with Computers II"
 title: "UCSB CS24 s26"
 github_url: https://github.com/ucsb-cs24/s26
+iclicker_join_link: https://join.iclicker.com/GEXG
 qtr: "s26"
 quarter: "Spring 2026"
 lecture_times: "MW 12:30a - 1:45p"

@@ -1,21 +1,19 @@
 ---
 num: "lect01"
 sequence: 1
-desc: "CS16 Review: Abstract Data Types (Linked List)"
+desc: "Course introduction"
 pre-reading: "Savitch: 2.1 - 2.5, 3.1"
 ready: true
 pdfurl: /lectures/CS24_Lecture1.pdf
 annotatedready: false
 annotatedpdfurl: /lectures/CS24_Lecture1_ann.pdf
-handouturl: https://docs.google.com/document/d/1HaLP88rtE3i6-YwHpOntyRExiFMhbHGJx9on6CHw3Ks/edit?usp=sharing
-handoutready: false
 ---
 # Code from lecture
 
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
 
 # Topics
-- Linked List as an Abstract Data Type: We'll review the Linked List data structure and contrast a custom implementation with std::list
-- Initialization routines for ADTs - parameterized constructors
-- We'll discuss the what, why, and how of operator overloading in C++
+- We'll discuss the goals of the course and expectations
+- Demo thinking through problems involving data structures using a leetcode problem involving linked lists
+- Link to leetcode problem: <https://leetcode.com/problems/reverse-linked-list/description/?envType=problem-list-v2&envId=linked-list>
 
