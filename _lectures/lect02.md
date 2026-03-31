@@ -2,7 +2,7 @@
 num: "lect02"
 sequence: 2
 desc: "C++ Operator Overloading and Rule of three"
-ready: false
+ready: true
 pre-reading: "Savitch: 4.3 - 4.4, 5.1, 5.3"
 pdfurl: /lectures/CS24_Lecture2.pdf
 annotatedready: false
@@ -17,7 +17,7 @@ handoutready: false
 
 
 # Topics
-Recursion,x dynamic memory errors, rule of three!
+Abstract Data Types review, operator overloading, rule of three!
 
 
 ## Rule of three
