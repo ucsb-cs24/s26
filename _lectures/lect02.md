@@ -8,7 +8,7 @@ pdfurl: /lectures/CS24_Lecture2.pdf
 annotatedready: true
 annotatedpdfurl: /lectures/CS24_Lecture2_ann.pdf
 handouturl: https://docs.google.com/document/d/1sljCnbOx8txR99VrWBfCDQ9QMC7QGPegnFXx5Y1DPUk/edit?tab=t.0
-handoutready: false
+handoutready: true
 ---
 
 # Code from lecture
