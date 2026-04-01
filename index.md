@@ -50,6 +50,21 @@ Pre-reading assignments in the lecture schedule use these shortforms (e.g., "Sav
 
 ---
 
+### Quizzes
+
+There are **4 quizzes** given during lecture. The lowest quiz score will be replaced by the final exam score if the final score is higher.
+
+| Quiz | Date |
+|------|------|
+| Quiz 1 | <time datetime="2026-04-08">Wednesday, April 8, 2026</time> |
+| Quiz 2 | <time datetime="2026-04-22">Wednesday, April 22, 2026</time> |
+| Quiz 3 | <time datetime="2026-05-06">Wednesday, May 6, 2026</time> |
+| Quiz 4 | <time datetime="2026-05-27">Wednesday, May 27, 2026</time> |
+
+Quizzes are 30–40 minutes at the beginning or end of lecture. No make-ups; see the [syllabus]({{site.baseurl}}/info/syllabus/) for full policy.
+
+---
+
 ### Lectures
 
 <div class="card card-body" id="lectures" markdown="1">
