@@ -1,7 +1,7 @@
 ---
 num: "lect04"
 sequence: 4
-desc: "Quiz 1 + Efficient search with Binary Search Trees"
+desc: "Quiz 1 + Space Complexity + Intro to Binary Trees"
 ready: false
 pre-reading: "Savitch: 12.1, 10.1 - 10.3"
 pdfurl: /lectures/CS24_BST_part1.pdf
@@ -13,6 +13,19 @@ annotatedpdfurl: /lectures/CS24_BST_part1_ann.pdf
 
 
 # Topics
+
+## Space Complexity
+The **space complexity** of an algorithm is the amount of **auxiliary (extra) memory** it uses as a function of the input size. Auxiliary space does **not** count the memory used by the input or the output — it only counts the additional memory the algorithm needs to compute the result. This includes:
+- Local variables
+- Temporary data structures (vectors, arrays, hash maps, etc.)
+- Call stack frames from recursion
+
+**Examples:**
+- A function that sorts an array in-place using a single temp variable: **O(1)** space
+- A function that copies all elements into a new vector to process them: **O(n)** space
+- A recursive function with maximum recursion depth `d`: **O(d)** space (one stack frame per call on the deepest path)
+
+
 * Efficient search using binary search
 * Binary trees
 * Binary search trees (BST) - search tree property and supported operations (search, insert, min, max)

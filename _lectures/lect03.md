@@ -34,18 +34,6 @@ The **time complexity** of an algorithm is the number of **constant-time operati
 - A nested loop (loop inside a loop) over an array of size n: **O(n²)** time
 - Binary search on a sorted array of size n: **O(log n)** time
 
-## Space Complexity
-The **space complexity** of an algorithm is the amount of **auxiliary (extra) memory** it uses as a function of the input size. Auxiliary space does **not** count the memory used by the input or the output — it only counts the additional memory the algorithm needs to compute the result. This includes:
-- Local variables
-- Temporary data structures (vectors, arrays, hash maps, etc.)
-- Call stack frames from recursion
-
-**Examples:**
-- A function that sorts an array in-place using a single temp variable: **O(1)** space
-- A function that copies all elements into a new vector to process them: **O(n)** space
-- A recursive function with maximum recursion depth `d`: **O(d)** space (one stack frame per call on the deepest path)
-
-
 ## Rule of three
 * In C++ there is a rule of thumb that states if any of the copy-constructor, copy assignment or destructor are overloaded, the others must be overloaded as well. We's like to understand the reasoning behind this rule of thumb. We looked at why and how we need to overload the destructor and the copy-constructor in the last class. We'll focus on the copy assignment operator in this class.
 

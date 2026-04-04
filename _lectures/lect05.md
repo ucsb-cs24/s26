@@ -1,7 +1,7 @@
 ---
 num: "lect05"
 sequence: 5
-desc: "BST operations and Tree traversals"
+desc: "Binary Search Trees"
 ready: false
 pre-reading: "Savitch: 10.4, 10.5"
 pdfurl: /lectures/CS24_BST_part2.pdf
