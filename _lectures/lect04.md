@@ -4,9 +4,10 @@ sequence: 4
 desc: "Quiz 1 + Space Complexity + Intro to Binary Trees"
 ready: false
 pre-reading: "Savitch: 12.1, 10.1 - 10.3"
-pdfurl: /lectures/CS24_BST_part1.pdf
+pdfurl: /lectures/CS24_Lecture4.pdf
 annotatedready: false
-annotatedpdfurl: /lectures/CS24_BST_part1_ann.pdf
+annotatedpdfurl: /lectures/CS24_Lecture4_ann.pdf
+handouturl: https://docs.google.com/document/d/1MoAQLZObtDIVmRpcJ84mAQ7HxswlxbyqK6ZBoqF_r0Y/edit?usp=sharing
 ---
 # Code from lecture
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
