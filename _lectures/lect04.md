@@ -2,7 +2,7 @@
 num: "lect04"
 sequence: 4
 desc: "Quiz 1 + Space Complexity + Intro to Binary Trees"
-ready: false
+ready: true
 pre-reading: "Savitch: 12.1, 10.1 - 10.3"
 pdfurl: /lectures/CS24_Lecture4.pdf
 annotatedready: false
