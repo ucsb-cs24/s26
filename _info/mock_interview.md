@@ -22,10 +22,10 @@ Mock interviews are worth **10% of your course grade** and provide an opportunit
 
 Your mock interview will consist of:
 
-1. **Introduction & Behavioral Warm-Up (2 minutes)** - Brief introduction and discussion of a technical challenge you've solved
-2. **Whiteboard Problem (5 minutes)** - Plan your approach to a LeetCode problem on a whiteboard or document
-3. **Coding Implementation (13 minutes)** - Implement your solution in C++ on LeetCode
-4. **Structured Feedback (5 minutes)** - Receive feedback on your performance and ask questions
+1. **Introduction & Behavioral Warm-Up (~2 minutes)** - Brief introduction and discussion of a technical challenge you've solved
+2. **Whiteboard Problem (~5 minutes)** - Plan your approach to a LeetCode problem on a whiteboard or document
+3. **Coding Implementation (~13 minutes)** - Implement your solution in C++ on LeetCode
+4. **Structured Feedback (~5 minutes)** - Receive feedback on your performance and ask questions
 
 ---
 
@@ -77,49 +77,6 @@ You will be asked to:
 
 ---
 
-## Grading Rubric (10% of course grade)
-
-Your performance will be evaluated across three sections. **The focus is on process and communication, not just correctness.**
-
-### Section 1: Behavioral/Introduction
-
-| Criteria | Exceeds Expectations (3) | Meets Expectations (2) | Needs Improvement (1) |
-|----------|-------------------------|------------------------|----------------------|
-| **Clarity & Relevance** | Clear, concise, and relevant; connects experience to CS | Mostly clear and relevant; some connection to CS | Unclear, off-topic, or rambling |
-| **Confidence & Professionalism** | Speaks confidently, maintains eye contact, positive tone | Some hesitancy, but generally professional | Hesitant, unprofessional, or negative tone |
-| **Reflection & Growth** | Shares a specific challenge or learning moment | Shares general experience | No reflection or learning discussed |
-
-### Section 2: Whiteboarding (Problem Understanding & Approach)
-
-| Criteria | Exceeds Expectations (3) | Meets Expectations (2) | Needs Improvement (1) |
-|----------|-------------------------|------------------------|----------------------|
-| **Problem Clarification** | Restates problem, asks clarifying questions, identifies edge cases, works through examples | Restates problem, some clarifications, some edge cases | Misses clarifications, ignores edge cases |
-| **Approach & Planning** | Explains and justifies logical, efficient approach; considers alternatives; clear progression | Explains reasonable approach; some jumps in reasoning | Jumps to code, unclear or inefficient plan |
-| **Communication** | Clearly explains thought process throughout; states goals and subgoals | Explains most steps; addresses some reasoning | Silent or unclear explanations |
-| **Use of Diagrams/Pseudocode** | Uses diagrams or pseudocode effectively | Some use of diagrams/pseudocode | No diagrams or pseudocode |
-
-### Section 3: Coding (Implementation & Testing)
-
-| Criteria | Exceeds Expectations (3) | Meets Expectations (2) | Needs Improvement (1) |
-|----------|-------------------------|------------------------|----------------------|
-| **Code Correctness** | Code is correct, handles all edge cases | Mostly correct, minor issues | Major errors, incomplete |
-| **Code Structure & Style** | Clean, readable code; good variable names; proper indentation | Some indentation/readability issues; acceptable variable names | Messy, hard to read, poor conventions |
-| **Adaptability** | Responds well to hints, adapts approach if needed | Accepts some feedback | Resists feedback, stuck on errors |
-| **Communication** | Narrates coding process clearly | Explains some steps | Silent or unclear during coding |
-| **Comfort with C++** | Familiar with lecture concepts; minimal syntax help needed | Needed some syntax/error assistance | Unfamiliar with C++; relied heavily on external help |
-
-### Grade Calculation
-
-Your final grade out of 10% will be based on your overall performance across all criteria:
-
-- **9-10%**: Excellent performance - exceeds expectations in most criteria; strong problem-solving and communication
-- **7-8%**: Good performance - meets or exceeds expectations in most criteria; solid effort and communication
-- **5-6%**: Satisfactory performance - meets expectations in some criteria; shows understanding and effort
-- **3-4%**: Minimal performance - needs improvement in most areas; shows up and tries but struggles
-- **0-2%**: Unsatisfactory - no-show, refuses to participate, or extreme lack of engagement
-
----
-
 ## Tips for Success
 
 **Do:**
@@ -150,10 +107,13 @@ A: That's okay! You're evaluated on your approach and communication, not just co
 A: No, the interview simulates a real technical interview where you won't have access to external resources. You should rely on what you've learned in class.
 
 **Q: What difficulty level will the problem be?**
-A: The problem will be a medium-difficulty LeetCode problem aligned with recent lecture topics. Your interviewer will select an unsolved problem from your LeetCode profile.
+A: The problem will be an easy or medium-difficulty LeetCode problem aligned with recent lecture topics. The system will select a random problem from LeetCode from topics that have already been covered in lecture.
 
+<!-- 
 **Q: Can I reschedule my interview?**
 A: You may reschedule at least 48 hours before your interview time if an open slot is available. Last-minute cancellations may not be accommodated.
+
+-->
 
 **Q: Will I know the problem beforehand?**
 A: No, you'll receive the problem during the interview via Canvas message. This simulates a real interview experience.
