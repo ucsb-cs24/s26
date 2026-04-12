@@ -17,6 +17,26 @@ Mock interviews are worth **10% of your course grade** and provide an opportunit
 **Important:** Book early! Slots fill up quickly. No make-ups without prior arrangement. Missing your scheduled interview = 0%.
 If this happens you must contact the course staff asap.
 
+## Intstructions to schedule your interview
+Go to app.caliber.cs.ucsb.edu on a computer (no phones)
+Click Sign and then Register — use your UCSB email and save your password somewhere safe. There is no way to reset your password.
+
+Join the course using course code: posted on Ed and Canvas
+
+Open the Mock Interview Scheduler and follow the steps below.
+
+How to Book Your Mock Interview
+Step 1: Complete the Pre-Program Survey The first time you open the scheduler, you'll see a welcome screen with a short survey (~10 min). This is a one-time requirement before you can book any interviews.
+Step 2: Select Your Course If you're enrolled in multiple courses, use the dropdown at the top to select the one you want to book for.
+Step 3: Browse Available Slots Switch to the Book a Slot tab. Available time slots are grouped by week. Each slot shows the date and time, interviewer name (if assigned), duration, and remaining seats.
+Step 4: Book Your Slot Click Book on a slot that works for you. You'll see a green confirmation banner once it's booked. You can hold one upcoming interview per course at a time. Please book your slot before Wednesday, April 15.
+Step 5: Complete the Pre-Interview Survey Ten minutes before your interview, a short survey (~3 min) will appear on your booking card. Complete it before your interview begins.
+Step 6: Attend Your Interview Show up at the scheduled time. Your interviewer will guide you through a technical problem. (the rubric is accessible at any point on the student booking page)
+Step 7: Complete the Post-Interview Survey After your session, a reflection survey (~8 min) will appear. Complete it to unlock your interviewer's feedback and rubric scores.
+
+Need to Reschedule? Click Reschedule on your booking card, select a new slot, and provide a brief reason. Your request will be reviewed by course staff.
+
+
 ---
 
 ## What to Expect
