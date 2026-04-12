@@ -8,13 +8,14 @@ ready: true
 
 ## Overview
 
-Mock interviews are worth **10% of your course grade** and provide an opportunity to practice technical problem-solving and communication skills in a supportive environment. You will complete one 20-minute mock interview with a TA or ULA during Weeks 3-10. You must book your slot by end of Week 2.
+Mock interviews are worth **10% of your course grade** and provide an opportunity to practice technical problem-solving and communication skills in a supportive environment. You will complete one 20-minute mock interview with a TA or ULA during Weeks 3-10. You must book your slot by April 15.
 
 **Timeline:**
-- **By end of Week 2**: Submit booking preferences form (link will be posted on course website)
-- **Weeks 5-10**: Complete your scheduled 20-minute mock interview
+- **By April 15**: Submit booking preferences form (instructions are posed on Ed and on Canvas)
+- **Weeks 3-10**: Complete your scheduled 20-minute mock interview
 
 **Important:** Book early! Slots fill up quickly. No make-ups without prior arrangement. Missing your scheduled interview = 0%.
+If this happens you must contact the course staff asap.
 
 ---
 
@@ -80,45 +81,7 @@ You will be asked to:
 ## Grading Rubric (10% of course grade)
 
 Your performance will be evaluated across three sections. **The focus is on process and communication, not just correctness.**
-
-### Section 1: Behavioral/Introduction
-
-| Criteria | Exceeds Expectations (3) | Meets Expectations (2) | Needs Improvement (1) |
-|----------|-------------------------|------------------------|----------------------|
-| **Clarity & Relevance** | Clear, concise, and relevant; connects experience to CS | Mostly clear and relevant; some connection to CS | Unclear, off-topic, or rambling |
-| **Confidence & Professionalism** | Speaks confidently, maintains eye contact, positive tone | Some hesitancy, but generally professional | Hesitant, unprofessional, or negative tone |
-| **Reflection & Growth** | Shares a specific challenge or learning moment | Shares general experience | No reflection or learning discussed |
-
-### Section 2: Whiteboarding (Problem Understanding & Approach)
-
-| Criteria | Exceeds Expectations (3) | Meets Expectations (2) | Needs Improvement (1) |
-|----------|-------------------------|------------------------|----------------------|
-| **Problem Clarification** | Restates problem, asks clarifying questions, identifies edge cases, works through examples | Restates problem, some clarifications, some edge cases | Misses clarifications, ignores edge cases |
-| **Approach & Planning** | Explains and justifies logical, efficient approach; considers alternatives; clear progression | Explains reasonable approach; some jumps in reasoning | Jumps to code, unclear or inefficient plan |
-| **Communication** | Clearly explains thought process throughout; states goals and subgoals | Explains most steps; addresses some reasoning | Silent or unclear explanations |
-| **Use of Diagrams/Pseudocode** | Uses diagrams or pseudocode effectively | Some use of diagrams/pseudocode | No diagrams or pseudocode |
-
-### Section 3: Coding (Implementation & Testing)
-
-| Criteria | Exceeds Expectations (3) | Meets Expectations (2) | Needs Improvement (1) |
-|----------|-------------------------|------------------------|----------------------|
-| **Code Correctness** | Code is correct, handles all edge cases | Mostly correct, minor issues | Major errors, incomplete |
-| **Code Structure & Style** | Clean, readable code; good variable names; proper indentation | Some indentation/readability issues; acceptable variable names | Messy, hard to read, poor conventions |
-| **Adaptability** | Responds well to hints, adapts approach if needed | Accepts some feedback | Resists feedback, stuck on errors |
-| **Communication** | Narrates coding process clearly | Explains some steps | Silent or unclear during coding |
-| **Comfort with C++** | Familiar with lecture concepts; minimal syntax help needed | Needed some syntax/error assistance | Unfamiliar with C++; relied heavily on external help |
-
-### Grade Calculation
-
-Your final grade out of 10% will be based on your overall performance across all criteria:
-
-- **9-10%**: Excellent performance - exceeds expectations in most criteria; strong problem-solving and communication
-- **7-8%**: Good performance - meets or exceeds expectations in most criteria; solid effort and communication
-- **5-6%**: Satisfactory performance - meets expectations in some criteria; shows understanding and effort
-- **3-4%**: Minimal performance - needs improvement in most areas; shows up and tries but struggles
-- **0-2%**: Unsatisfactory - no-show, refuses to participate, or extreme lack of engagement
-
----
+The grading rubric is available via the Caliber platform. Instructions to schedule your mock interview and view the rubric are posted on Ed and on Canvas.
 
 ## Tips for Success
 
@@ -150,10 +113,10 @@ A: That's okay! You're evaluated on your approach and communication, not just co
 A: No, the interview simulates a real technical interview where you won't have access to external resources. You should rely on what you've learned in class.
 
 **Q: What difficulty level will the problem be?**
-A: The problem will be a medium-difficulty LeetCode problem aligned with recent lecture topics. Your interviewer will select an unsolved problem from your LeetCode profile.
+A: The problem will be on topics covered in lecture 1 - 2 weeks prior to the date of interview. Your interviewer will select an unsolved problem from your LeetCode profile.
 
 **Q: Can I reschedule my interview?**
-A: You may reschedule at least 48 hours before your interview time if an open slot is available. Last-minute cancellations may not be accommodated.
+A: Click Reschedule on your booking card on Caliber, select a new slot, and provide a brief reason. Your request will be reviewed by course staff.
 
 **Q: Will I know the problem beforehand?**
 A: No, you'll receive the problem during the interview via Canvas message. This simulates a real interview experience.
@@ -164,4 +127,4 @@ A: That's normal! Remember this is a learning experience in a supportive environ
 
 ---
 
-[Back to Syllabus](/w26/info/syllabus/)
+[Back to Syllabus](/s26/info/syllabus/)
