@@ -17,7 +17,7 @@ Mock interviews are worth **10% of your course grade** and provide an opportunit
 **Important:** Book early! Slots fill up quickly. No make-ups without prior arrangement. Missing your scheduled interview = 0%.
 If this happens you must contact the course staff asap.
 
-## Intstructions to schedule your interview
+## Instructions to schedule your interview
 Go to app.caliber.cs.ucsb.edu on a computer (no phones)
 Click Sign and then Register — use your UCSB email and save your password somewhere safe. There is no way to reset your password.
 
