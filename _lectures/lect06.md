@@ -1,7 +1,7 @@
 ---
 num: "lect06"
 sequence: 6
-desc: "Iterators"
+desc: "BST Traversals and Iterators"
 ready: false
 pre-reading: "Savitch: 3.1 - 3.3"
 pdfurl: /lectures/CS24_BST_iterators.pdf
@@ -13,6 +13,7 @@ handoutready: false
 
 # Code from lecture
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
+
 
 
 # Topics

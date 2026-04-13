@@ -2,13 +2,13 @@
 num: "lect05"
 sequence: 5
 desc: "Binary Search Trees"
-ready: false
+ready: true
 pre-reading: "Savitch: 10.4, 10.5"
-pdfurl: /lectures/CS24_BST_part2.pdf
+pdfurl: /lectures/CS24_Lecture5.pdf
 annotatedready: false
 annotatedpdfurl: /lectures/CS24_BST_part2_ann.pdf
 handouturl: https://docs.google.com/document/d/1LZnQXepO3PHp-ncyidrDgoHqrwUZrBzatFCDLlT_cxo/edit?tab=t.0#heading=h.74bek3gewyr8
-handoutready: false
+handoutready: true
 ---
 
 # Code from lecture
@@ -16,6 +16,5 @@ handoutready: false
 
 # Topics
 * Coming up with algorithms by tracing through examples: BST insert
-* Tree traversals: inorder, preorder, postorder, and why each is useful
 * Outline of successor and delete operations
 * Visualizing BST operations: <https://visualgo.net/en/bst>
