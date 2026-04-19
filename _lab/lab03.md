@@ -2,7 +2,7 @@
 
 layout: lab
 num: lab03
-ready: ftruee
+ready: true
 desc: "Binary Search Tree"
 assigned: 2026-04-15 09:00:00.00-08:00
 due: 2026-04-24 23:59:00.00-08:00
