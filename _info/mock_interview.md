@@ -43,10 +43,10 @@ Need to Reschedule? Click Reschedule on your booking card, select a new slot, an
 
 Your mock interview will consist of:
 
-1. **Introduction & Behavioral Warm-Up (2 minutes)** - Brief introduction and discussion of a technical challenge you've solved
-2. **Whiteboard Problem (5 minutes)** - Plan your approach to a LeetCode problem on a whiteboard or document
-3. **Coding Implementation (13 minutes)** - Implement your solution in C++ on LeetCode
-4. **Structured Feedback (5 minutes)** - Receive feedback on your performance and ask questions
+1. **Introduction & Behavioral Warm-Up (~2 minutes)** - Brief introduction and discussion of a technical challenge you've solved
+2. **Whiteboard Problem (~5 minutes)** - Plan your approach to a LeetCode problem on a whiteboard or document
+3. **Coding Implementation (~13 minutes)** - Implement your solution in C++ on LeetCode
+4. **Structured Feedback (~5 minutes)** - Receive feedback on your performance and ask questions
 
 ---
 
@@ -133,7 +133,8 @@ A: That's okay! You're evaluated on your approach and communication, not just co
 A: No, the interview simulates a real technical interview where you won't have access to external resources. You should rely on what you've learned in class.
 
 **Q: What difficulty level will the problem be?**
-A: The problem will be on topics covered in lecture 1 - 2 weeks prior to the date of interview. Your interviewer will select an unsolved problem from your LeetCode profile.
+A: The problem will be an easy or medium-difficulty LeetCode problem aligned with recent lecture topics (covered in lectures 1 to 2 weeks prior your interview). The system will select a random problem from LeetCode from topics that have already been covered in lecture.
+
 
 **Q: Can I reschedule my interview?**
 A: Click Reschedule on your booking card on Caliber, select a new slot, and provide a brief reason. Your request will be reviewed by course staff.
