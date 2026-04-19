@@ -8,13 +8,34 @@ ready: true
 
 ## Overview
 
-Mock interviews are worth **10% of your course grade** and provide an opportunity to practice technical problem-solving and communication skills in a supportive environment. You will complete one 20-minute mock interview with a TA or ULA during Weeks 3-10. You must book your slot by end of Week 2.
+Mock interviews are worth **10% of your course grade** and provide an opportunity to practice technical problem-solving and communication skills in a supportive environment. You will complete one 20-minute mock interview with a TA or ULA during Weeks 3-10. You must book your slot by April 15.
 
 **Timeline:**
-- **By end of Week 2**: Submit booking preferences form (link will be posted on course website)
-- **Weeks 5-10**: Complete your scheduled 20-minute mock interview
+- **By April 15**: Submit booking preferences form (instructions are posed on Ed and on Canvas)
+- **Weeks 3-10**: Complete your scheduled 20-minute mock interview
 
 **Important:** Book early! Slots fill up quickly. No make-ups without prior arrangement. Missing your scheduled interview = 0%.
+If this happens you must contact the course staff asap.
+
+## Instructions to schedule your interview
+Go to app.caliber.cs.ucsb.edu on a computer (no phones)
+Click Sign and then Register — use your UCSB email and save your password somewhere safe. There is no way to reset your password.
+
+Join the course using course code: posted on Ed and Canvas
+
+Open the Mock Interview Scheduler and follow the steps below.
+
+How to Book Your Mock Interview
+Step 1: Complete the Pre-Program Survey The first time you open the scheduler, you'll see a welcome screen with a short survey (~10 min). This is a one-time requirement before you can book any interviews.
+Step 2: Select Your Course If you're enrolled in multiple courses, use the dropdown at the top to select the one you want to book for.
+Step 3: Browse Available Slots Switch to the Book a Slot tab. Available time slots are grouped by week. Each slot shows the date and time, interviewer name (if assigned), duration, and remaining seats.
+Step 4: Book Your Slot Click Book on a slot that works for you. You'll see a green confirmation banner once it's booked. You can hold one upcoming interview per course at a time. Please book your slot before Wednesday, April 15.
+Step 5: Complete the Pre-Interview Survey Ten minutes before your interview, a short survey (~3 min) will appear on your booking card. Complete it before your interview begins.
+Step 6: Attend Your Interview Show up at the scheduled time. Your interviewer will guide you through a technical problem. (the rubric is accessible at any point on the student booking page)
+Step 7: Complete the Post-Interview Survey After your session, a reflection survey (~8 min) will appear. Complete it to unlock your interviewer's feedback and rubric scores.
+
+Need to Reschedule? Click Reschedule on your booking card, select a new slot, and provide a brief reason. Your request will be reviewed by course staff.
+
 
 ---
 
@@ -77,6 +98,11 @@ You will be asked to:
 
 ---
 
+## Grading Rubric (10% of course grade)
+
+Your performance will be evaluated across three sections. **The focus is on process and communication, not just correctness.**
+The grading rubric is available via the Caliber platform. Instructions to schedule your mock interview and view the rubric are posted on Ed and on Canvas.
+
 ## Tips for Success
 
 **Do:**
@@ -107,13 +133,11 @@ A: That's okay! You're evaluated on your approach and communication, not just co
 A: No, the interview simulates a real technical interview where you won't have access to external resources. You should rely on what you've learned in class.
 
 **Q: What difficulty level will the problem be?**
-A: The problem will be an easy or medium-difficulty LeetCode problem aligned with recent lecture topics. The system will select a random problem from LeetCode from topics that have already been covered in lecture.
+A: The problem will be an easy or medium-difficulty LeetCode problem aligned with recent lecture topics (covered in lectures 1 to 2 weeks prior your interview). The system will select a random problem from LeetCode from topics that have already been covered in lecture.
 
-<!-- 
+
 **Q: Can I reschedule my interview?**
-A: You may reschedule at least 48 hours before your interview time if an open slot is available. Last-minute cancellations may not be accommodated.
-
--->
+A: Click Reschedule on your booking card on Caliber, select a new slot, and provide a brief reason. Your request will be reviewed by course staff.
 
 **Q: Will I know the problem beforehand?**
 A: No, you'll receive the problem during the interview via Canvas message. This simulates a real interview experience.
@@ -124,4 +148,4 @@ A: That's normal! Remember this is a learning experience in a supportive environ
 
 ---
 
-[Back to Syllabus](/w26/info/syllabus/)
+[Back to Syllabus](/s26/info/syllabus/)
