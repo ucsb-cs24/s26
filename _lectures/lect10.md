@@ -1,7 +1,7 @@
 ---
 num: "lect10"
 sequence: 10
-desc: "Binary Heaps and Priority Queues"
+desc: "Binary Heaps"
 ready: false
 pre-reading: "Savitch: 11.1 - 11.2"
 pdfurl: /lectures/CS24_BinaryHeap.pdf
@@ -19,7 +19,6 @@ Make a copy and work to complete inclass activities
 ## Topics
 * Binary Heap data structure and its applications
 * Implementing a binary heap 
-* Application of priority_queue (ADT - max heap)
 
 
 

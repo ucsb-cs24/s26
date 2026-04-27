@@ -1,7 +1,7 @@
 ---
 num: "lect07"
 sequence: 7
-desc: "Stacks"
+desc: "Stack"
 ready: true
 pre-reading: "Savitch: 7.1 - 7.4"
 pdfurl: /lectures/CS24_Stacks.pdf
