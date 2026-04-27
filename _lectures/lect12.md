@@ -1,7 +1,7 @@
 ---
 num: "lect12"
 sequence: 12
-desc: "Quiz 3 + Priority Queue and Hashtable Practice"
+desc: "Quiz 3 + Reflection"
 ready: false
 pre-reading: ""
 pdfurl: /lectures/CS24_PQ_HT_Practice.pdf
@@ -14,6 +14,5 @@ annotatedpdfurl: /lectures/CS24_PQ_HT_Practice_ann.pdf
 
 
 
-# Topics
-* We will revisit the web-traffic analysis problem and explore different approaches involving PQ and hashtable
+
 

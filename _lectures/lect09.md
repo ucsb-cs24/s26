@@ -14,6 +14,7 @@ handoutready: false
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
 
 ## Topics
+* Debrief on reflections
 * Queues with applications to Breadth First Traversal
 * Priority Queue for priority based extraction
 * Demo of ER Triage

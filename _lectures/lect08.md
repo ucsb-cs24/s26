@@ -1,7 +1,7 @@
 ---
 num: "lect08"
 sequence: 8
-desc: "Quiz 2"
+desc: "Quiz 2 + Reflection"
 ready: true
 pre-reading: "Savitch: 1.2"
 annotatedready: false

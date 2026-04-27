@@ -1,7 +1,7 @@
 ---
 num: "lect17"
 sequence: 17
-desc: "Quiz 4 + Review"
+desc: "Quiz 4 + Reflection"
 ready: false
 ---
 
