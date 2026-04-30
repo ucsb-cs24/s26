@@ -19,7 +19,7 @@ Welcome to CS24! The goal of this class is to solve problems efficiently using d
 
 ---
 **Sections:** {{site.lab_times}} in Phelps 3525 &nbsp; 
-[Link to section slides](https://drive.google.com/drive/folders/1SjI4TUtQelAa_XJUlwC0k2a6qh76fznG?usp=drive_link)  &nbsp;  
+[Link to section slides](https://drive.google.com/drive/folders/1hs-swcWE7LgbJJ3ecqf-9PGq7FE7cVfX)  &nbsp;  
 
 ---
 **Teaching Assistants (TAs)** {{site.tas}}  &nbsp; 
