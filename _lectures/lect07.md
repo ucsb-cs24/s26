@@ -5,8 +5,8 @@ desc: "Stack"
 ready: true
 pre-reading: "Savitch: 7.1 - 7.4"
 pdfurl: /lectures/CS24_Stacks.pdf
-annotatedready: false
-annotatedpdfurl: /lectures/CS24_Stacks_ann.pdf
+annotatedready: true
+annotatedpdfurl: /lectures/Stacks_ann.pdf
 handouturl: https://docs.google.com/document/d/1IZU9fwohU5ch91f2pMRpK04oym-sAF4WZrV6-HRUl-s/edit?usp=sharing
 handoutready: true
 ---
