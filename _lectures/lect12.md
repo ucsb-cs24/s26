@@ -2,11 +2,10 @@
 num: "lect12"
 sequence: 12
 desc: "Quiz 3 + Reflection"
-ready: false
+ready: true
 pre-reading: ""
-pdfurl: /lectures/CS24_PQ_HT_Practice.pdf
 annotatedready: false
-annotatedpdfurl: /lectures/CS24_PQ_HT_Practice_ann.pdf
+handoutready: false
 ---
 
 # Code from lecture
