@@ -1,5 +1,5 @@
 ---
-num: "lect19"
+num: "lect17"
 sequence: 19
 desc: "Final Review"
 ready: false

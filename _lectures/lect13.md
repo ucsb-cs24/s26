@@ -1,5 +1,5 @@
 ---
-num: "lect13"
+num: "lect12"
 sequence: 13
 desc: "Graph representation with applications to Neural Networks"
 ready: true
@@ -7,7 +7,7 @@ pre-reading: "Savitch: 15.1 - 15.2"
 pdfurl: /lectures/CS24_Graph_Representation.pdf
 handouturl: https://bit.ly/NeuralNets-GraphRepresentation
 handoutready: true
-annotatedready: false
+annotatedready: true
 annotatedpdfurl:  /lectures/CS24_Graph_Representation_ann.pdf
 ---
 

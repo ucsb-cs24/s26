@@ -1,5 +1,5 @@
 ---
-num: "lect15"
+num: "lect14"
 sequence: 15
 desc: "Graph Search: Depth first traversal"
 ready: false

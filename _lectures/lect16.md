@@ -1,5 +1,5 @@
 ---
-num: "lect16"
+num: "lect15"
 sequence: 16
 desc: "Mergesort: Divide and Conquer"
 ready: false

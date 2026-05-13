@@ -1,5 +1,5 @@
 ---
-num: "lect17"
+num: ""
 sequence: 17
 desc: "Quiz 4 + Reflection"
 ready: false
