@@ -5,7 +5,7 @@ desc: "Graph search: Breadth first traversal + Reflection"
 ready: true
 pre-reading: "Savitch: 15.3"
 pdfurl: /lectures/CS24_Graphs_BFS.pdf
-annotatedready: false
+annotatedready: true
 annotatedpdfurl:  /lectures/CS24_Graph_BFT_ann.pdf
 ---
 
