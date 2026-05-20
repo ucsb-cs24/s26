@@ -8,7 +8,7 @@ pdfurl: /lectures/CS24_MergeSort.pdf
 annotatedready: false
 annotatedpdfurl: /lectures/CS24_MergeSort_ann.pdf
 handouturl: https://bit.ly/Divide-and-Conquer-Practice
-handoutready: false
+handoutready: true
 ---
 
 # Code from lecture
