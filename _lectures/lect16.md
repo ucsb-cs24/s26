@@ -1,8 +1,8 @@
 ---
 num: "lect15"
 sequence: 16
-desc: "Mergesort: Divide and Conquer"
-ready: false
+desc: "Mergesort: Divide and Conquer + Heapsort"
+ready: true
 pre-reading: "Savitch: 13.1 - 13.2"
 pdfurl: /lectures/CS24_MergeSort.pdf
 annotatedready: false
@@ -14,8 +14,6 @@ handoutready: false
 # Code from lecture
 [{{site.lect_repo}}/tree/main/{{page.num}}]({{site.lect_repo}}/tree/main/{{page.num}})
 
-# Handout
-* Link to leetcode medium problem: <https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/>
 
 # Topics
 * Divide and Conquer Algorithms
