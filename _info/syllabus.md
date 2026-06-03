@@ -143,7 +143,7 @@ Key rules:
 
 ### Final Exam
 The final exam is **comprehensive** and covers all course material.
-- **Date**: Thursday, March 19, 2026
+- **Date**: Tuesday, June 9, 2026
 - **Time**: Noon - 3:00 PM
 - **Location**: {{site.lecture_location}} (Same as lecture hall)
 
